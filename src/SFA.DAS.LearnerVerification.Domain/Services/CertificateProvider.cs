@@ -15,7 +15,9 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
         {
             _lrsApiSettings = lrsApiSettings;
             _logger = logger;
-            SetupClientCertificate();
+            SetupClientCertificate(); //todo I don't think we want this line.
+                                      //makes sense to only set up the certificate the first time it's needed
+                                      //also means that the validation which runs in GetClientCertificate() won't happen before the first time we call SetupClientCertificate()
         }
 
         public X509Certificate2 GetClientCertificate()
