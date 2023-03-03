@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerVerification.Domain.Factories;
 
 namespace SFA.DAS.LearnerVerification.Domain.Services
@@ -6,10 +7,12 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
     public class LearnerServiceClientProvider<T> : ILearnerServiceClientProvider<T>
     {
         private readonly IClientTypeFactory<T> _factory;
+        private readonly ILogger<LearnerServiceClientProvider<T>> _logger;
 
-        public LearnerServiceClientProvider(IClientTypeFactory<T> factory)
+        public LearnerServiceClientProvider(IClientTypeFactory<T> factory, ILogger<LearnerServiceClientProvider<T>> logger)
         {
             _factory = factory;
+            _logger = logger;
         }
 
         public T GetServiceAsync()
@@ -27,7 +30,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
             }
             catch (Exception ex)
             {
-                //TODO: Implement logging?
+                _logger.LogError(ex, "Error attempting to get service");
                 throw;
             }
         }
