@@ -1,3 +1,5 @@
+using Castle.Core.Logging;
+using Microsoft.Extensions.Logging;
 using Moq;
 using SFA.DAS.LearnerVerification.Domain.Factories;
 using SFA.DAS.LearnerVerification.Domain.Services;
@@ -13,7 +15,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
         [SetUp]
         public void Setup()
         {
-            _sut = new CertificateProvider(_mockLrsApiWcfSettings.Object);
+            _sut = new CertificateProvider(_mockLrsApiWcfSettings.Object, Mock.Of<ILogger<CertificateProvider>>());
         }
 
         [Test]

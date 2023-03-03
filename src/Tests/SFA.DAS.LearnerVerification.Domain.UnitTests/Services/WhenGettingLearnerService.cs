@@ -1,4 +1,5 @@
 using LearningRecordsService;
+using Microsoft.Extensions.Logging;
 using Moq;
 using SFA.DAS.LearnerVerification.Domain.Factories;
 using SFA.DAS.LearnerVerification.Domain.Services;
@@ -14,7 +15,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
         [SetUp]
         public void Setup()
         {
-            _sut = new LearnerServiceClientProvider<LearnerPortTypeClient>(_mockClientTypeFactory.Object);
+            _sut = new LearnerServiceClientProvider<LearnerPortTypeClient>(_mockClientTypeFactory.Object, Mock.Of<ILogger<LearnerServiceClientProvider<LearnerPortTypeClient>>>());
         }
 
         [Test]
