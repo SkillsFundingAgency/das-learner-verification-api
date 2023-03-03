@@ -23,8 +23,6 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
                     LearnerToVerify = new MIAPLearnerToVerify() { ULN = uln, GivenName = firstName, FamilyName = lastName }
                 });
 
-                await service.CloseAsync(); //TODO: Is this necessary?
-
                 return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner;
             }
             catch (Exception ex)
