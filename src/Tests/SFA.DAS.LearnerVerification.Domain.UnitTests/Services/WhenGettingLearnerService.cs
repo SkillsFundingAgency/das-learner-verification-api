@@ -4,7 +4,7 @@ using Moq;
 using SFA.DAS.LearnerVerification.Domain.Factories;
 using SFA.DAS.LearnerVerification.Domain.Services;
 
-namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
+namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
     public class WhenGettingLearnerService
     {
