@@ -1,4 +1,5 @@
 using SFA.DAS.Configuration.AzureTableStorage;
+using SFA.DAS.LearnerVerification.Domain;
 using SFA.DAS.LearnerVerification.InnerApi.Configuration;
 using SFA.DAS.LearnerVerification.Queries;
 
@@ -18,7 +19,9 @@ builder.Services.AddSwaggerGen();
 var applicationSettings = new ApplicationSettings();
 builder.Configuration.Bind(nameof(ApplicationSettings), applicationSettings);
 builder.Services.AddSingleton(x => applicationSettings);
-builder.Services.AddQueryServices();
+builder.Services
+    .AddQueryServices()
+    .AddDomainServices();
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
