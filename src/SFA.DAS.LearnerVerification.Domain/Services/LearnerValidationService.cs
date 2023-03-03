@@ -1,14 +1,17 @@
 using LearningRecordsService;
+using Microsoft.Extensions.Logging;
 
 namespace SFA.DAS.LearnerVerification.Domain.Services
 {
     public class LearnerValidationService : ILearnerValidationService
     {
         private readonly ILearnerServiceClientProvider<LearnerPortTypeClient> _lrsClientProvider;
+        private readonly ILogger<LearnerValidationService> _logger;
 
-        public LearnerValidationService(ILearnerServiceClientProvider<LearnerPortTypeClient> lrsClientProvider)
+        public LearnerValidationService(ILearnerServiceClientProvider<LearnerPortTypeClient> lrsClientProvider, ILogger<LearnerValidationService> logger)
         {
             _lrsClientProvider = lrsClientProvider;
+            _logger = logger;
         }
 
         public async Task<MIAPVerifiedLearner> ValidateLearner(string uln, string firstName, string lastName)
@@ -27,7 +30,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
             }
             catch (Exception ex)
             {
-                //TODO: think about logging?
+                _logger.LogError(ex, "Error validating learner");
                 throw;
             }
         }
