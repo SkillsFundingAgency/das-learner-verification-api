@@ -23,7 +23,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
             //TODO: Mock client provider behaviour
 
             //Act
-            var service = _sut.ValidateLearner(); //TODO:
+            //var service = _sut.ValidateLearner(); //TODO:
 
             //Assert
             //TODO:
