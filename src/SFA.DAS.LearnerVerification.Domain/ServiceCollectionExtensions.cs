@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using SFA.DAS.LearnerVerification.Domain.Factories;
 using LearningRecordsService;
+using SFA.DAS.LearnerVerification.Domain.Services;
 
 namespace SFA.DAS.LearnerVerification.Domain
 {

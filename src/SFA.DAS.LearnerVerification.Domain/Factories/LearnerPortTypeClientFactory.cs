@@ -1,5 +1,6 @@
 ﻿using LearningRecordsService;
 using System.ServiceModel;
+using SFA.DAS.LearnerVerification.Domain.Services;
 
 namespace SFA.DAS.LearnerVerification.Domain.Factories
 {

@@ -1,9 +1,9 @@
-﻿using Azure.Identity;
+﻿using System.Security.Cryptography.X509Certificates;
+using Azure.Identity;
 using Azure.Security.KeyVault.Certificates;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Logging;
 
-namespace SFA.DAS.LearnerVerification.Domain.Factories
+namespace SFA.DAS.LearnerVerification.Domain.Services
 {
     public class CertificateProvider : ICertificateProvider
     {

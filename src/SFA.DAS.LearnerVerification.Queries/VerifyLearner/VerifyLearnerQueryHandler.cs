@@ -1,5 +1,6 @@
 ﻿using SFA.DAS.Funding.ApprenticeshipEarnings.Queries.GetAcademicYearEarnings;
 using SFA.DAS.LearnerVerification.Domain.Factories;
+using SFA.DAS.LearnerVerification.Domain.Services;
 using SFA.DAS.LearnerVerification.Infrastructure.Queries;
 
 namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner

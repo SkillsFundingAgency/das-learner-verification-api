@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.LearnerVerification.Domain.Factories
+﻿namespace SFA.DAS.LearnerVerification.Domain.Services
 {
     public interface ILearnerServiceClientProvider<T>
     {

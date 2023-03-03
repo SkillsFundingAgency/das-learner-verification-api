@@ -2,6 +2,7 @@ using AutoFixture;
 using Moq;
 using SFA.DAS.LearnerVerification.Domain.Factories;
 using System.ServiceModel;
+using SFA.DAS.LearnerVerification.Domain.Services;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
 {

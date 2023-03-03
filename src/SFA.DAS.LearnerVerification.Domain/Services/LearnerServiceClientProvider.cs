@@ -1,6 +1,7 @@
 ﻿using System.ServiceModel;
+using SFA.DAS.LearnerVerification.Domain.Factories;
 
-namespace SFA.DAS.LearnerVerification.Domain.Factories
+namespace SFA.DAS.LearnerVerification.Domain.Services
 {
     public class LearnerServiceClientProvider<T> : ILearnerServiceClientProvider<T>
     {
