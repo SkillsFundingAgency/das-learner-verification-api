@@ -23,6 +23,7 @@ builder.Services
     .AddQueryServices()
     .AddDomainServices();
 builder.Services.AddHealthChecks();
+builder.Services.AddLogging();
 
 var app = builder.Build();
 
