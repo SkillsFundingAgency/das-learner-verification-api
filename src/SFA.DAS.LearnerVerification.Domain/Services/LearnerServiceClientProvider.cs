@@ -34,7 +34,5 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
                 throw;
             }
         }
-
-        //TODO: do we need to close client in Dispose or similar?
     }
 }

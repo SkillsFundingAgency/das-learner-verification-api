@@ -15,7 +15,8 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
         {
             try
             {
-                var service = _lrsClientProvider.GetServiceAsync();
+                await using var service = _lrsClientProvider.GetServiceAsync();
+
                 ///TODO: Should we be using the 'Find by ULN endpoint' instead here? (reccomended by LRS)
                 var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
                 {
