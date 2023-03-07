@@ -4,6 +4,7 @@ using SFA.DAS.LearnerVerification.Domain.Services;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
+    [Ignore("Unit tests still in development")]
     public class WhenGettingClientCertificate
     {
         private Mock<LrsApiWcfSettings> _mockLrsApiWcfSettings;

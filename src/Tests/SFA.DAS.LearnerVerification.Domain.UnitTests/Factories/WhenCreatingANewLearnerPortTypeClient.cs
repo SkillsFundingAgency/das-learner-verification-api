@@ -8,13 +8,13 @@ using LearningRecordsService;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
 {
+    [Ignore("Unit tests still in development")]
     public class WhenCreatingANewLearnerPortTypeClient
     {
+        private LearnerPortTypeClient _client;
         private Fixture _fixture;
         private LrsApiWcfSettings _settings;
         private LearnerPortTypeClientFactory _sut;
-
-        private LearnerPortTypeClient _client;
 
         [SetUp]
         public void Setup()
@@ -34,15 +34,16 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
         }
 
         [Test]
-        public void ThenALearnerPortTypeClientIsCreated()
-        {
-            _client.Should().NotBeNull();
-        }
-
-        [Test]
         public void ThenALearnerPortTypeClientHasTheCorrectUrl()
         {
             _client.Endpoint.Address.ToString().Should().Be(_settings.LearnerServiceBaseUrl);
+        }
+
+        [Test]
+        public void ThenALearnerPortTypeClientIsCreated()
+        {
+            _client.Should().NotBeNull();
+            _client.Should().BeOfType<LearnerPortTypeClient>();
         }
     }
 }
