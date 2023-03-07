@@ -23,7 +23,7 @@ namespace SFA.DAS.LearnerVerification.InnerApi.Controllers
             var request = new VerifyLearnerQuery(uln, firstName, lastName); //TODO: Create request object?
             var response = await _queryDispatcher.Send<VerifyLearnerQuery, VerifyLearnerQueryResponse>(request);
 
-            return Ok(response); //TODO: Figure out exactly what we want to return here
+            return Ok(response);
         }
     }
 }

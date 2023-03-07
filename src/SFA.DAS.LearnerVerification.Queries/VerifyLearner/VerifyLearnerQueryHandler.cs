@@ -1,7 +1,7 @@
 ﻿using SFA.DAS.Funding.ApprenticeshipEarnings.Queries.GetAcademicYearEarnings;
-using SFA.DAS.LearnerVerification.Domain.Factories;
 using SFA.DAS.LearnerVerification.Domain.Services;
 using SFA.DAS.LearnerVerification.Infrastructure.Queries;
+using SFA.DAS.LearnerVerification.Types;
 
 namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
 {
@@ -20,7 +20,7 @@ namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
 
             return new VerifyLearnerQueryResponse
             {
-                IsValid = true //TODO: populate properly
+                ResponseCode = learnerValidationResponse.ResponseCode.GetEnumValueByDescription<LearnerValidationServiceResponseCode>()
             };
         }
     }

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.LearnerVerification.Domain\SFA.DAS.LearnerVerification.Domain.csproj" />
+    <ProjectReference Include="..\SFA.DAS.LearnerVerification.Types\SFA.DAS.LearnerVerification.Types.csproj" />
   </ItemGroup>
 
 </Project>

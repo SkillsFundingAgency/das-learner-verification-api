@@ -1,7 +1,9 @@
-﻿namespace SFA.DAS.Funding.ApprenticeshipEarnings.Queries.GetAcademicYearEarnings
+﻿using SFA.DAS.LearnerVerification.Types;
+
+namespace SFA.DAS.Funding.ApprenticeshipEarnings.Queries.GetAcademicYearEarnings
 {
     public class VerifyLearnerQueryResponse
     {
-        public bool IsValid { get; set; }
+        public LearnerValidationServiceResponseCode ResponseCode { get; set; }
     }
 }
