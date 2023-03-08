@@ -2,6 +2,6 @@
 {
     public interface ILearnerServiceClientProvider<T>
     {
-        T GetServiceAsync();
+        T GetService();
     }
 }

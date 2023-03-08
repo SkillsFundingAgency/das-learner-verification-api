@@ -5,8 +5,8 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
 {
     public class LearnerValidationService : ILearnerValidationService
     {
-        private readonly ILearnerServiceClientProvider<LearnerPortTypeClient> _lrsClientProvider;
         private readonly ILogger<LearnerValidationService> _logger;
+        private readonly ILearnerServiceClientProvider<LearnerPortTypeClient> _lrsClientProvider;
 
         public LearnerValidationService(ILearnerServiceClientProvider<LearnerPortTypeClient> lrsClientProvider, ILogger<LearnerValidationService> logger)
         {
@@ -18,7 +18,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
         {
             try
             {
-                await using var service = _lrsClientProvider.GetServiceAsync();
+                var service = _lrsClientProvider.GetService();
 
                 ///TODO: Should we be using the 'Find by ULN endpoint' instead here? (reccomended by LRS)
                 var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()

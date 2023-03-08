@@ -8,7 +8,6 @@ using LearningRecordsService;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
 {
-    [Ignore("Unit tests still in development")]
     public class WhenCreatingANewLearnerPortTypeClient
     {
         private LearnerPortTypeClient _client;

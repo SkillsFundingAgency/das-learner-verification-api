@@ -15,7 +15,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
             _logger = logger;
         }
 
-        public T GetServiceAsync()
+        public T GetService()
         {
             try
             {
