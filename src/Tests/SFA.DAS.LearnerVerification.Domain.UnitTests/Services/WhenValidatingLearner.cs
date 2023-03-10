@@ -46,11 +46,12 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public async Task ThenVerificationResponseIsReturnedAsync()
         {
             //Act
-            _learner = await _sut.ValidateLearner("012345678", "Ron", "Swanson");
+            _learner = await _sut.ValidateLearner("012345678", "Ron", "Swanson", "F", DateTime.UtcNow.AddYears(-18));
 
             //Assert
             _learner.Should().BeOfType<MIAPVerifiedLearner>();
             //TODO: Add more assertions
+            // verify verifyLearnerAsync() is called with the correct args
         }
     }
 }

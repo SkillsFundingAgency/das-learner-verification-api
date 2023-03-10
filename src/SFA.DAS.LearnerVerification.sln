@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.LearnerVerification
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{190C3DE6-9069-48A8-A9E1-639EED97FFF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerVerification.Types", "SFA.DAS.LearnerVerification.Types\SFA.DAS.LearnerVerification.Types.csproj", "{301FE008-9F97-4E20-ADFE-2C193AF80A41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.LearnerVerification.Types", "SFA.DAS.LearnerVerification.Types\SFA.DAS.LearnerVerification.Types.csproj", "{301FE008-9F97-4E20-ADFE-2C193AF80A41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

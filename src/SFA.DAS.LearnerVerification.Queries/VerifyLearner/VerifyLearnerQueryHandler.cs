@@ -16,11 +16,18 @@ namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
 
         public async Task<VerifyLearnerQueryResponse> Handle(VerifyLearnerQuery query, CancellationToken cancellationToken = default)
         {
-            var learnerValidationResponse = await _learnerValidationService.ValidateLearner(query.Uln, query.FirstName, query.LastName);
+            var learnerValidationResponse = await _learnerValidationService.ValidateLearner(
+                query.Uln,
+                query.FirstName,
+                query.LastName,
+                query.Gender,
+                query.DateOfBirth
+                );
 
             return new VerifyLearnerQueryResponse
             {
-                ResponseCode = learnerValidationResponse.ResponseCode.GetEnumValueByDescription<LearnerValidationServiceResponseCode>()
+                ResponseCode = learnerValidationResponse.ResponseCode.GetEnumValueByDescription<LearnerValidationServiceResponseCode>(),
+                FailureFlags = learnerValidationResponse.FailureFlag.Select(a => a.GetEnumValueByDescription<FailureFlag>())
             };
         }
     }

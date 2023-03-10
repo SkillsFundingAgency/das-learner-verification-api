@@ -18,9 +18,9 @@ namespace SFA.DAS.LearnerVerification.InnerApi.Controllers
 
         [Route("verify")]
         [HttpGet]
-        public async Task<IActionResult> VerifyLearnerDetails(string uln, string firstName, string lastName)
+        public async Task<IActionResult> VerifyLearnerDetails(string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
         {
-            var request = new VerifyLearnerQuery(uln, firstName, lastName); //TODO: Create request object?
+            var request = new VerifyLearnerQuery(uln, firstName, lastName, gender, dateOfBirth);
             var response = await _queryDispatcher.Send<VerifyLearnerQuery, VerifyLearnerQueryResponse>(request);
 
             return Ok(response);

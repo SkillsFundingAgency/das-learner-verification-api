@@ -14,16 +14,21 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
             _logger = logger;
         }
 
-        public async Task<MIAPVerifiedLearner> ValidateLearner(string uln, string firstName, string lastName)
+        public async Task<MIAPVerifiedLearner> ValidateLearner(string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
         {
             try
             {
                 var service = _lrsClientProvider.GetService();
-
-                ///TODO: Should we be using the 'Find by ULN endpoint' instead here? (reccomended by LRS)
                 var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
                 {
-                    LearnerToVerify = new MIAPLearnerToVerify() { ULN = uln, GivenName = firstName, FamilyName = lastName }
+                    LearnerToVerify = new MIAPLearnerToVerify()
+                    {
+                        ULN = uln,
+                        GivenName = firstName,
+                        FamilyName = lastName,
+                        Gender = gender,
+                        DateOfBirth = dateOfBirth?.ToString("yyyy-MM-dd")
+                    }
                 });
 
                 return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner;
