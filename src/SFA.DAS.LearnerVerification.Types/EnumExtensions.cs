@@ -11,7 +11,7 @@ namespace SFA.DAS.LearnerVerification.Types
             {
                 return attribute.Description;
             }
-            throw new ArgumentException("Item not found.", nameof(enumValue));
+            throw new ArgumentException($"Description could not be found for {enumValue}.", nameof(enumValue));
         }
 
         public static T GetEnumValueByDescription<T>(this string description) where T : Enum
@@ -23,7 +23,7 @@ namespace SFA.DAS.LearnerVerification.Types
                     return (T)enumItem;
                 }
             }
-            throw new ArgumentException("Not found.", nameof(description));
+            throw new ArgumentException($"Enum value for description {description} could not be found.", nameof(description));
         }
     }
 }
