@@ -5,7 +5,7 @@ using SFA.DAS.LearnerVerification.Types;
 
 namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
 {
-    public class VerifyLearnerQueryHandler : IQueryHandler<VerifyLearnerQuery, VerifyLearnerQueryResponse>
+    public class VerifyLearnerQueryHandler : IQueryHandler<VerifyLearnerQuery, LearnerVerificationResponse>
     {
         private readonly ILearnerValidationService _learnerValidationService;
 
@@ -14,7 +14,7 @@ namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
             _learnerValidationService = learnerValidationService;
         }
 
-        public async Task<VerifyLearnerQueryResponse> Handle(VerifyLearnerQuery query, CancellationToken cancellationToken = default)
+        public async Task<LearnerVerificationResponse> Handle(VerifyLearnerQuery query, CancellationToken cancellationToken = default)
         {
             var learnerValidationResponse = await _learnerValidationService.ValidateLearner(
                 query.Uln,
@@ -24,9 +24,9 @@ namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
                 query.DateOfBirth
                 );
 
-            return new VerifyLearnerQueryResponse
+            return new LearnerVerificationResponse
             {
-                ResponseCode = learnerValidationResponse.ResponseCode.GetEnumValueByDescription<LearnerValidationServiceResponseCode>(),
+                ResponseCode = learnerValidationResponse.ResponseCode.GetEnumValueByDescription<LearnerVerificationResponseCode>(),
                 FailureFlags = learnerValidationResponse.FailureFlag.Select(a => a.GetEnumValueByDescription<FailureFlag>())
             };
         }

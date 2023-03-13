@@ -18,7 +18,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
         {
             try
             {
-                var service = _lrsClientProvider.GetService();
+                await using var service = _lrsClientProvider.GetServiceAsync();
                 var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
                 {
                     LearnerToVerify = new MIAPLearnerToVerify()

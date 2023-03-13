@@ -2,7 +2,7 @@
 
 namespace SFA.DAS.LearnerVerification.Types
 {
-    public enum LearnerValidationServiceResponseCode
+    public enum LearnerVerificationResponseCode
     {
         [Description("WSVRC001")]
         SuccessfulMatch,

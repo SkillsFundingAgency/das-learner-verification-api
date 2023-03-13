@@ -26,7 +26,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             _sut = new LearnerServiceClientProvider<LearnerPortTypeClient>(_mockClientTypeFactory.Object, Mock.Of<ILogger<LearnerServiceClientProvider<LearnerPortTypeClient>>>());
 
             //Act
-            _client = _sut.GetService();
+            _client = _sut.GetServiceAsync();
         }
 
         [Test]
