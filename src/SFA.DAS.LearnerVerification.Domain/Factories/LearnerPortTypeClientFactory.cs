@@ -13,6 +13,11 @@ namespace SFA.DAS.LearnerVerification.Domain.Factories
         {
             _lrsApiSettings = lrsApiSettings;
             _certificateProvider = certificateProvider;
+
+            if (string.IsNullOrEmpty(_lrsApiSettings.LearnerServiceBaseUrl))
+            {
+                throw new ArgumentNullException(nameof(_lrsApiSettings.LearnerServiceBaseUrl), $"{nameof(_lrsApiSettings.LearnerServiceBaseUrl)} is not specified. This is required to run the app.");
+            }
         }
 
         public LearnerPortTypeClient Create(BasicHttpBinding binding)
