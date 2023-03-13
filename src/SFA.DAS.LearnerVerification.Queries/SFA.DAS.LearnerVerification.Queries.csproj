@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Scrutor" Version="4.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.DAS.LearnerVerification.Domain\SFA.DAS.LearnerVerification.Domain.csproj" />
+    <ProjectReference Include="..\SFA.DAS.LearnerVerification.Types\SFA.DAS.LearnerVerification.Types.csproj" />
+  </ItemGroup>
+
+</Project>
