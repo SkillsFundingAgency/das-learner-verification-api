@@ -43,7 +43,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             //Arrange
             _settings.CertName = "certificate";
             _settings.KeyVaultUrl = "http://valid.test.url/";
-            //TODO: Figure out if code should be changed so that this passes?
+            //TODO: Test not currently passing. Figure out if code needs to be changed so that this passes?
 
             //Act
             _clientCertificate = _sut.GetClientCertificate();
