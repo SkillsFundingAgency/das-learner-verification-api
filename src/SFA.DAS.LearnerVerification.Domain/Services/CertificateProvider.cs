@@ -26,7 +26,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
 
             if (string.IsNullOrEmpty(_lrsApiSettings.CertName))
             {
-                throw new ArgumentNullException(nameof(_lrsApiSettings.CertName), "Cert name added to KeyVault is not specified. That is required to run the app");
+                throw new ArgumentNullException(nameof(_lrsApiSettings.CertName), "Cert name added to KeyVault is not specified. That is required to run the app.");
             }
 
             if (_x509Certificate == null)

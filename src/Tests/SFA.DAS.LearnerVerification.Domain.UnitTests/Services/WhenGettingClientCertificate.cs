@@ -6,12 +6,18 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
-    [Ignore("Unit tests still in development")]
     public class WhenGettingClientCertificate
     {
-        private X509Certificate2 _clientCertificate;
         private LrsApiWcfSettings _settings;
         private CertificateProvider _sut;
+
+        [SetUp]
+        public void Setup()
+        {
+            //Arrange
+            _settings = new LrsApiWcfSettings();
+            _sut = new CertificateProvider(_settings, Mock.Of<ILogger<CertificateProvider>>());
+        }
 
         [TestCase(null)]
         [TestCase("")]
@@ -29,28 +35,21 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
                 .WithMessage("KeyVault url is not specified. That is required to run the app. (Parameter 'KeyVaultUrl')");
         }
 
-        [SetUp]
-        public void Setup()
+        [TestCase(null)]
+        [TestCase("")]
+        public void AndCertNameConfigIsNotSetThenThrowException(string certName)
         {
             //Arrange
-            _settings = new LrsApiWcfSettings();
-            _sut = new CertificateProvider(_settings, Mock.Of<ILogger<CertificateProvider>>());
-        }
-
-        [Test]
-        public void ThenX509Certificate2IsReturned()
-        {
-            //Arrange
-            _settings.CertName = "certificate";
-            _settings.KeyVaultUrl = "http://valid.test.url/";
-            //TODO: Test not currently passing. Figure out if code needs to be changed so that this passes?
+            _settings.KeyVaultUrl = "not null test url";
+            _settings.CertName = certName;
 
             //Act
-            _clientCertificate = _sut.GetClientCertificate();
+            Action act = () => _sut.GetClientCertificate();
 
             //Assert
-            _clientCertificate.Should().NotBeNull();
-            _clientCertificate.Should().BeOfType<X509Certificate2>();
+            act.Should()
+                .Throw<ArgumentNullException>()
+                .WithMessage("Cert name added to KeyVault is not specified. That is required to run the app. (Parameter 'CertName')");
         }
     }
 }
