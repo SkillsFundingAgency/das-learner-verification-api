@@ -16,7 +16,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         private LearnerVerificationServiceClientProvider _sut;
 
         [SetUp]
-        public async Task SetupAsync()
+        public void Setup()
         {
             //Arrange
             _mockClientTypeFactory = new();
@@ -41,10 +41,10 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public void ThenLearnerServiceClientFactoryIsCalledWithCorrectArguments()
         {
             _mockClientTypeFactory
-                .Verify(x => x.Create(It.Is<BasicHttpBinding>(
-                    x => x.Security.Transport.ClientCredentialType == HttpClientCredentialType.Certificate &&
-                    x.Security.Mode == BasicHttpSecurityMode.Transport &&
-                    x.UseDefaultWebProxy == true
+                .Verify(factory => factory.Create(It.Is<BasicHttpBinding>(
+                    binding => binding.Security.Transport.ClientCredentialType == HttpClientCredentialType.Certificate &&
+                    binding.Security.Mode == BasicHttpSecurityMode.Transport &&
+                    binding.UseDefaultWebProxy == true
                     )), Times.Once);
         }
     }
