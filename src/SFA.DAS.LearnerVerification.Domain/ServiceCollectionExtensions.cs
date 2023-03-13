@@ -12,16 +12,10 @@ namespace SFA.DAS.LearnerVerification.Domain
         public static IServiceCollection AddDomainServices(this IServiceCollection serviceCollection)
         {
             serviceCollection
-                .Scan(scan =>
-                {
-                    scan.FromAssembliesOf(typeof(CertificateProvider))
-                        .AddClasses(classes => classes.AssignableTo(typeof(ILearnerServiceClientProvider<>)))
-                        .AsImplementedInterfaces()
-                        .WithTransientLifetime();
-                })
                 .AddScoped<ICertificateProvider, CertificateProvider>()
                 .AddScoped<ILearnerValidationService, LearnerValidationService>()
                 .AddScoped<IClientTypeFactory<LearnerPortTypeClient>, LearnerPortTypeClientFactory>()
+                .AddScoped<ILearnerVerificationServiceClientProvider, LearnerVerificationServiceClientProvider>()
                 .AddScoped<LrsApiWcfSettings>(); //todo I think this needs to be populated with config data
 
             return serviceCollection;

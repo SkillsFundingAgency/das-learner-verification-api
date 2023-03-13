@@ -6,9 +6,9 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
     public class LearnerValidationService : ILearnerValidationService
     {
         private readonly ILogger<LearnerValidationService> _logger;
-        private readonly ILearnerServiceClientProvider<LearnerPortTypeClient> _lrsClientProvider;
+        private readonly ILearnerVerificationServiceClientProvider _lrsClientProvider;
 
-        public LearnerValidationService(ILearnerServiceClientProvider<LearnerPortTypeClient> lrsClientProvider, ILogger<LearnerValidationService> logger)
+        public LearnerValidationService(ILearnerVerificationServiceClientProvider lrsClientProvider, ILogger<LearnerValidationService> logger)
         {
             _lrsClientProvider = lrsClientProvider;
             _logger = logger;
@@ -18,7 +18,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
         {
             try
             {
-                await using var service = _lrsClientProvider.GetServiceAsync();
+                await using var service = _lrsClientProvider.Get();
                 var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
                 {
                     LearnerToVerify = new MIAPLearnerToVerify()

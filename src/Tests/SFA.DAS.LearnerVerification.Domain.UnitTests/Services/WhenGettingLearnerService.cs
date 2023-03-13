@@ -5,14 +5,15 @@ using Moq;
 using SFA.DAS.LearnerVerification.Domain.Factories;
 using SFA.DAS.LearnerVerification.Domain.Services;
 using System.ServiceModel;
+using SFA.DAS.LearnerVerification.Domain.Wrappers;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
     public class WhenGettingLearnerService
     {
-        private LearnerPortTypeClient? _client;
+        private ILearnerVerificationClientWrapper _clientWrapper;
         private Mock<IClientTypeFactory<LearnerPortTypeClient>> _mockClientTypeFactory;
-        private LearnerServiceClientProvider<LearnerPortTypeClient> _sut;
+        private LearnerVerificationServiceClientProvider _sut;
 
         [SetUp]
         public async Task SetupAsync()
@@ -23,17 +24,17 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
                 .Setup(x => x.Create(It.IsAny<BasicHttpBinding>()))
                 .Returns(new LearnerPortTypeClient());
 
-            _sut = new LearnerServiceClientProvider<LearnerPortTypeClient>(_mockClientTypeFactory.Object, Mock.Of<ILogger<LearnerServiceClientProvider<LearnerPortTypeClient>>>());
+            _sut = new LearnerVerificationServiceClientProvider(_mockClientTypeFactory.Object, Mock.Of<ILogger<LearnerVerificationServiceClientProvider>>());
 
             //Act
-            _client = _sut.GetServiceAsync();
+            _clientWrapper = _sut.Get();
         }
 
         [Test]
         public void ThenCorrectServiceIsReturned()
         {
-            _client.Should().NotBeNull();
-            _client.Should().BeOfType<LearnerPortTypeClient>();
+            _clientWrapper.Should().NotBeNull();
+            _clientWrapper.Should().BeOfType<LearnerVerificationClientWrapper>();
         }
 
         [Test]

@@ -3,20 +3,20 @@ using LearningRecordsService;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SFA.DAS.LearnerVerification.Domain.Services;
+using SFA.DAS.LearnerVerification.Domain.Wrappers;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
-    [Ignore("Unit tests still in development")]
     public class WhenValidatingLearner
     {
         private MIAPVerifiedLearner _learner;
-        private Mock<LearnerPortType> _mockClient;
-        private Mock<ILearnerServiceClientProvider<LearnerPortTypeClient>> _mockClientProvider;
+        private Mock<ILearnerVerificationClientWrapper> _mockClientWrapper;
+        private Mock<ILearnerVerificationServiceClientProvider> _mockClientProvider;
         private LearnerValidationService _sut;
 
         public WhenValidatingLearner()
         {
-            _mockClient = new();
+            _mockClientWrapper = new();
             _mockClientProvider = new();
         }
 
@@ -24,8 +24,8 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public void Setup()
         {
             //Arrange
-            _mockClient
-                .Setup(x => x.verifyLearnerAsync(It.IsAny<verifyLearnerRequest>()))
+            _mockClientWrapper
+                .Setup(x => x.verifyLearnerAsync(It.IsAny<VerifyLearnerRqst>()))
                 .ReturnsAsync(new verifyLearnerResponse()
                 {
                     VerifyLearnerResponse = new VerifyLearnerResp()
@@ -34,10 +34,9 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
                     }
                 });
 
-            //TODO: finish this set up (not currently working)
-            //_mockClientProvider
-            //    .Setup(x => x.GetService())
-            //    .Returns(_mockClient.Object);
+            _mockClientProvider
+                .Setup(x => x.Get())
+                .Returns(_mockClientWrapper.Object);
 
             _sut = new LearnerValidationService(_mockClientProvider.Object, Mock.Of<ILogger<LearnerValidationService>>());
         }

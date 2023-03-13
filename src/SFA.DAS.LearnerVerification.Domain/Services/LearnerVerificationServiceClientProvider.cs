@@ -1,21 +1,23 @@
 ﻿using System.ServiceModel;
+using LearningRecordsService;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerVerification.Domain.Factories;
+using SFA.DAS.LearnerVerification.Domain.Wrappers;
 
 namespace SFA.DAS.LearnerVerification.Domain.Services
 {
-    public class LearnerServiceClientProvider<T> : ILearnerServiceClientProvider<T>
+    public class LearnerVerificationServiceClientProvider : ILearnerVerificationServiceClientProvider
     {
-        private readonly IClientTypeFactory<T> _factory;
-        private readonly ILogger<LearnerServiceClientProvider<T>> _logger;
+        private readonly IClientTypeFactory<LearnerPortTypeClient> _factory;
+        private readonly ILogger<LearnerVerificationServiceClientProvider> _logger;
 
-        public LearnerServiceClientProvider(IClientTypeFactory<T> factory, ILogger<LearnerServiceClientProvider<T>> logger)
+        public LearnerVerificationServiceClientProvider(IClientTypeFactory<LearnerPortTypeClient> factory, ILogger<LearnerVerificationServiceClientProvider> logger)
         {
             _factory = factory;
             _logger = logger;
         }
 
-        public T GetServiceAsync()
+        public ILearnerVerificationClientWrapper Get()
         {
             try
             {
@@ -26,7 +28,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
 
                 var service = _factory.Create(binding);
 
-                return service;
+                return new LearnerVerificationClientWrapper(service);
             }
             catch (Exception ex)
             {
