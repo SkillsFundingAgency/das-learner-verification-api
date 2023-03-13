@@ -5,6 +5,6 @@ namespace SFA.DAS.LearnerVerification.InnerApi.Configuration
     [ExcludeFromCodeCoverage]
     public class ApplicationSettings
     {
-        //TODO: Populate
+        //TODO: Populate?
     }
 }

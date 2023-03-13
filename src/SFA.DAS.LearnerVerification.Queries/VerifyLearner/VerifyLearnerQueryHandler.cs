@@ -1,11 +1,11 @@
 ﻿using SFA.DAS.Funding.ApprenticeshipEarnings.Queries.GetAcademicYearEarnings;
-using SFA.DAS.LearnerVerification.Domain.Factories;
 using SFA.DAS.LearnerVerification.Domain.Services;
 using SFA.DAS.LearnerVerification.Infrastructure.Queries;
+using SFA.DAS.LearnerVerification.Types;
 
 namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
 {
-    public class VerifyLearnerQueryHandler : IQueryHandler<VerifyLearnerQuery, VerifyLearnerQueryResponse>
+    public class VerifyLearnerQueryHandler : IQueryHandler<VerifyLearnerQuery, LearnerVerificationResponse>
     {
         private readonly ILearnerValidationService _learnerValidationService;
 
@@ -14,13 +14,20 @@ namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
             _learnerValidationService = learnerValidationService;
         }
 
-        public async Task<VerifyLearnerQueryResponse> Handle(VerifyLearnerQuery query, CancellationToken cancellationToken = default)
+        public async Task<LearnerVerificationResponse> Handle(VerifyLearnerQuery query, CancellationToken cancellationToken = default)
         {
-            var learnerValidationResponse = await _learnerValidationService.ValidateLearner(query.Uln, query.FirstName, query.LastName);
+            var learnerValidationResponse = await _learnerValidationService.ValidateLearner(
+                query.Uln,
+                query.FirstName,
+                query.LastName,
+                query.Gender,
+                query.DateOfBirth
+                );
 
-            return new VerifyLearnerQueryResponse
+            return new LearnerVerificationResponse
             {
-                IsValid = true //TODO: populate properly
+                ResponseCode = learnerValidationResponse.ResponseCode.GetEnumValueByDescription<LearnerVerificationResponseCode>(),
+                FailureFlags = learnerValidationResponse.FailureFlag.Select(a => a.GetEnumValueByDescription<FailureFlag>())
             };
         }
     }

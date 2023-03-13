@@ -7,29 +7,26 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
 {
     public class CertificateProvider : ICertificateProvider
     {
-        private readonly LrsApiWcfSettings _lrsApiSettings;
         private readonly ILogger<CertificateProvider> _logger;
+        private readonly LrsApiWcfSettings _lrsApiSettings;
         private X509Certificate2 _x509Certificate;
 
         public CertificateProvider(LrsApiWcfSettings lrsApiSettings, ILogger<CertificateProvider> logger)
         {
             _lrsApiSettings = lrsApiSettings;
             _logger = logger;
-            SetupClientCertificate(); //todo I don't think we want this line.
-                                      //makes sense to only set up the certificate the first time it's needed
-                                      //also means that the validation which runs in GetClientCertificate() won't happen before the first time we call SetupClientCertificate()
         }
 
         public X509Certificate2 GetClientCertificate()
         {
             if (string.IsNullOrEmpty(_lrsApiSettings.KeyVaultUrl))
             {
-                throw new Exception("KeyVault url is not specified. That is required to run the app");
+                throw new ArgumentNullException(nameof(_lrsApiSettings.KeyVaultUrl), "KeyVault url is not specified. That is required to run the app.");
             }
 
             if (string.IsNullOrEmpty(_lrsApiSettings.CertName))
             {
-                throw new Exception("Cert name added to KeyVault is not specified. That is required to run the app");
+                throw new ArgumentNullException(nameof(_lrsApiSettings.CertName), "Cert name added to KeyVault is not specified. That is required to run the app");
             }
 
             if (_x509Certificate == null)

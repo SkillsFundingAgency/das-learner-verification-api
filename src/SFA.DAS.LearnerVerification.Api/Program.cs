@@ -23,7 +23,7 @@ builder.Services
     .AddQueryServices()
     .AddDomainServices();
 builder.Services.AddHealthChecks();
-builder.Services.AddLogging();
+builder.Services.AddLogging(); //TODO: Ensure Logger is configured properly
 
 var app = builder.Build();
 
