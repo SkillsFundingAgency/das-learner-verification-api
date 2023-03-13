@@ -1,6 +1,7 @@
 ﻿using LearningRecordsService;
 using System.ServiceModel;
 using SFA.DAS.LearnerVerification.Domain.Services;
+using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
 namespace SFA.DAS.LearnerVerification.Domain.Factories
 {
@@ -9,11 +10,10 @@ namespace SFA.DAS.LearnerVerification.Domain.Factories
         private readonly ICertificateProvider _certificateProvider;
         private readonly LrsApiWcfSettings _lrsApiSettings;
 
-        public LearnerPortTypeClientFactory(LrsApiWcfSettings lrsApiSettings, ICertificateProvider certificateProvider)
+        public LearnerPortTypeClientFactory(ICertificateProvider certificateProvider, ApplicationSettings appSettings)
         {
-            _lrsApiSettings = lrsApiSettings;
             _certificateProvider = certificateProvider;
-
+            _lrsApiSettings = appSettings.LrsApiWcfSettings;
             if (string.IsNullOrEmpty(_lrsApiSettings.LearnerServiceBaseUrl))
             {
                 throw new ArgumentNullException(nameof(_lrsApiSettings.LearnerServiceBaseUrl), $"{nameof(_lrsApiSettings.LearnerServiceBaseUrl)} is not specified. This is required to run the app.");

@@ -2,21 +2,24 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SFA.DAS.LearnerVerification.Domain.Services;
-using System.Security.Cryptography.X509Certificates;
+using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
     public class WhenGettingClientCertificate
     {
-        private LrsApiWcfSettings _settings;
+        private ApplicationSettings _settings;
         private CertificateProvider _sut;
 
         [SetUp]
         public void Setup()
         {
             //Arrange
-            _settings = new LrsApiWcfSettings();
-            _sut = new CertificateProvider(_settings, Mock.Of<ILogger<CertificateProvider>>());
+            _settings = new ApplicationSettings
+            {
+                LrsApiWcfSettings = new LrsApiWcfSettings()
+            };
+            _sut = new CertificateProvider(Mock.Of<ILogger<CertificateProvider>>(), _settings);
         }
 
         [TestCase(null)]
@@ -24,7 +27,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public void AndKeyVaultConfigIsNotSetThenThrowException(string url)
         {
             //Arrange
-            _settings.KeyVaultUrl = url;
+            _settings.LrsApiWcfSettings.KeyVaultUrl = url;
 
             //Act
             Action act = () => _sut.GetClientCertificate();
@@ -40,8 +43,8 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public void AndCertNameConfigIsNotSetThenThrowException(string certName)
         {
             //Arrange
-            _settings.KeyVaultUrl = "not null test url";
-            _settings.CertName = certName;
+            _settings.LrsApiWcfSettings.KeyVaultUrl = "not null test url";
+            _settings.LrsApiWcfSettings.CertName = certName;
 
             //Act
             Action act = () => _sut.GetClientCertificate();

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace SFA.DAS.LearnerVerification.Domain
+namespace SFA.DAS.LearnerVerification.Infrastructure.Configuration
 {
     [ExcludeFromCodeCoverage]
     public class LrsApiWcfSettings

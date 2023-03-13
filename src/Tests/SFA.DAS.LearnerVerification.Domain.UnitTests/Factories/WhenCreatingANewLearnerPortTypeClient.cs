@@ -5,8 +5,7 @@ using System.ServiceModel;
 using FluentAssertions;
 using SFA.DAS.LearnerVerification.Domain.Services;
 using LearningRecordsService;
-using System.ServiceModel.Channels;
-using System.Security.Policy;
+using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
 {
@@ -14,7 +13,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
     {
         private LearnerPortTypeClient _client;
         private Fixture _fixture;
-        private LrsApiWcfSettings _settings;
+        private ApplicationSettings _settings;
         private BasicHttpBinding _basicHttpBinding;
         private LearnerPortTypeClientFactory _sut;
 
@@ -24,11 +23,12 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
             //Arrange
             _fixture = new Fixture();
             _basicHttpBinding = _fixture.Create<BasicHttpBinding>();
+            _settings = new ApplicationSettings();
         }
 
         private void AddLearnerServiceBaseUrl(string? url)
         {
-            _settings = new LrsApiWcfSettings
+            _settings.LrsApiWcfSettings = new LrsApiWcfSettings
             {
                 LearnerServiceBaseUrl = url
             };
@@ -36,7 +36,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
 
         private void AddValidLearnerServiceBaseUrl()
         {
-            _settings = new LrsApiWcfSettings
+            _settings.LrsApiWcfSettings = new LrsApiWcfSettings
             {
                 LearnerServiceBaseUrl = "http://valid.test.url/"
             };
@@ -50,7 +50,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
             AddLearnerServiceBaseUrl(url);
 
             //Act
-            Action act = () => { _ = new LearnerPortTypeClientFactory(_settings, Mock.Of<ICertificateProvider>()); };
+            Action act = () => { _ = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings); };
 
             //Assert
             act.Should()
@@ -63,13 +63,13 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
         {
             //Arrange
             AddValidLearnerServiceBaseUrl();
-            _sut = new LearnerPortTypeClientFactory(_settings, Mock.Of<ICertificateProvider>());
+            _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings);
 
             //Act
             _client = _sut.Create(_basicHttpBinding);
 
             //Assert
-            _client.Endpoint.Address.ToString().Should().Be(_settings.LearnerServiceBaseUrl);
+            _client.Endpoint.Address.ToString().Should().Be(_settings.LrsApiWcfSettings.LearnerServiceBaseUrl);
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
         {
             //Arrange
             AddValidLearnerServiceBaseUrl();
-            _sut = new LearnerPortTypeClientFactory(_settings, Mock.Of<ICertificateProvider>());
+            _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings);
 
             //Act
             _client = _sut.Create(_basicHttpBinding);

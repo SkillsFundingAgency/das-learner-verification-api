@@ -15,8 +15,7 @@ namespace SFA.DAS.LearnerVerification.Domain
                 .AddScoped<ICertificateProvider, CertificateProvider>()
                 .AddScoped<ILearnerValidationService, LearnerValidationService>()
                 .AddScoped<IClientTypeFactory<LearnerPortTypeClient>, LearnerPortTypeClientFactory>()
-                .AddScoped<ILearnerVerificationServiceClientProvider, LearnerVerificationServiceClientProvider>()
-                .AddScoped<LrsApiWcfSettings>(); //todo I think this needs to be populated with config data
+                .AddScoped<ILearnerVerificationServiceClientProvider, LearnerVerificationServiceClientProvider>();
 
             return serviceCollection;
         }

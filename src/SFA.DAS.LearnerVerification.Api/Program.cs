@@ -1,44 +1,43 @@
-using SFA.DAS.Configuration.AzureTableStorage;
+using SFA.DAS.LearnerVerification.Api.Configuration;
 using SFA.DAS.LearnerVerification.Domain;
-using SFA.DAS.LearnerVerification.InnerApi.Configuration;
 using SFA.DAS.LearnerVerification.Queries;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Configuration.AddAzureTableStorage(options =>
+namespace SFA.DAS.LearnerVerification.Api
 {
-    options.ConfigurationKeys = new[] { "SFA.DAS.Funding.ApprenticeshipEarnings" };
-    options.StorageConnectionString = builder.Configuration["ConfigurationStorageConnectionString"];
-    options.EnvironmentName = builder.Configuration["EnvironmentName"];
-    options.PreFixConfigurationKeys = false;
-});
+    public class Program
+    {
+        private static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-var applicationSettings = new ApplicationSettings();
-builder.Configuration.Bind(nameof(ApplicationSettings), applicationSettings);
-builder.Services.AddSingleton(x => applicationSettings);
-builder.Services
-    .AddQueryServices()
-    .AddDomainServices();
-builder.Services.AddHealthChecks();
-builder.Services.AddLogging(); //TODO: Ensure Logger is configured properly
+            builder.SetupConfiguration();
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+            builder.Services
+                .AddQueryServices()
+                .AddDomainServices();
+            builder.Services.AddHealthChecks();
+            builder.Services.AddLogging(); //TODO: Ensure Logger is configured properly
 
-app.MapHealthChecks("/ping");
+            var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+            app.MapHealthChecks("/ping");
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.Run();
+        }
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
