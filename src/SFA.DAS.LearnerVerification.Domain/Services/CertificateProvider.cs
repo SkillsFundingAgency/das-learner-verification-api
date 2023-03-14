@@ -2,6 +2,7 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Certificates;
 using Microsoft.Extensions.Logging;
+using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
 namespace SFA.DAS.LearnerVerification.Domain.Services
 {
@@ -11,9 +12,9 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
         private readonly LrsApiWcfSettings _lrsApiSettings;
         private X509Certificate2 _x509Certificate;
 
-        public CertificateProvider(LrsApiWcfSettings lrsApiSettings, ILogger<CertificateProvider> logger)
+        public CertificateProvider(ILogger<CertificateProvider> logger, ApplicationSettings appSettings)
         {
-            _lrsApiSettings = lrsApiSettings;
+            _lrsApiSettings = appSettings.LrsApiWcfSettings;
             _logger = logger;
         }
 
@@ -46,7 +47,12 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
                     ManagedIdentityClientId = _lrsApiSettings.AzureADManagedIdentityClientId
                 }));
 
-                _x509Certificate = client.DownloadCertificate(_lrsApiSettings.CertName);
+                //var client = new CertificateClient(new Uri(_lrsApiSettings.KeyVaultUrl), new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                //{
+                //    ManagedIdentityClientId = _lrsApiSettings.AzureADManagedIdentityClientId
+                //}));
+
+                //_x509Certificate = client.DownloadCertificate(_lrsApiSettings.CertName);
             }
             catch (Exception ex)
             {

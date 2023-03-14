@@ -29,4 +29,8 @@
     <PackageReference Include="System.ServiceModel.Security" Version="4.10.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.DAS.LearnerVerification.Infrastructure\SFA.DAS.LearnerVerification.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
