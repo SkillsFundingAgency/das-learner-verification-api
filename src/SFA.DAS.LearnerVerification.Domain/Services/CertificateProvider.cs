@@ -47,12 +47,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
                     ManagedIdentityClientId = _lrsApiSettings.AzureADManagedIdentityClientId
                 }));
 
-                //var client = new CertificateClient(new Uri(_lrsApiSettings.KeyVaultUrl), new DefaultAzureCredential(new DefaultAzureCredentialOptions
-                //{
-                //    ManagedIdentityClientId = _lrsApiSettings.AzureADManagedIdentityClientId
-                //}));
-
-                //_x509Certificate = client.DownloadCertificate(_lrsApiSettings.CertName);
+                _x509Certificate = client.DownloadCertificate(_lrsApiSettings.CertName);
             }
             catch (Exception ex)
             {
