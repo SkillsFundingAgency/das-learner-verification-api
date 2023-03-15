@@ -10,7 +10,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
     public class WhenValidatingLearner
     {
-        private MIAPVerifiedLearner _learner;
+        private LearnerVerificationResponse _verificationResponse;
         private Mock<ILearnerVerificationClientWrapper> _mockClientWrapper;
         private Mock<ILearnerVerificationServiceClientProvider> _mockClientProvider;
         private ApplicationSettings _settings;
@@ -18,6 +18,8 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 
         private readonly string _expectedFamilyName = "Dwyer";
         private readonly string _expectedGivenName = "Andy";
+        private readonly string _expectedResponseCode = "WSVRC001";
+        private readonly string[] _expectedFailures = new string[0];
 
         public WhenValidatingLearner()
         {
@@ -30,19 +32,25 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public void Setup()
         {
             //Arrange
+        }
+
+        private void MockValidClientProvider()
+        {
             _mockClientWrapper
-                .Setup(x => x.verifyLearnerAsync(It.IsAny<VerifyLearnerRqst>()))
-                .ReturnsAsync(new verifyLearnerResponse()
-                {
-                    VerifyLearnerResponse = new VerifyLearnerResp()
-                    {
-                        VerifiedLearner = new MIAPVerifiedLearner
-                        {
-                            FamilyName = _expectedFamilyName,
-                            GivenName = _expectedGivenName
-                        }
-                    }
-                });
+                            .Setup(x => x.verifyLearnerAsync(It.IsAny<VerifyLearnerRqst>()))
+                            .ReturnsAsync(new verifyLearnerResponse()
+                            {
+                                VerifyLearnerResponse = new VerifyLearnerResp()
+                                {
+                                    VerifiedLearner = new MIAPVerifiedLearner
+                                    {
+                                        FamilyName = _expectedFamilyName,
+                                        GivenName = _expectedGivenName,
+                                        ResponseCode = _expectedResponseCode,
+                                        FailureFlag = _expectedFailures
+                                    }
+                                }
+                            });
 
             _mockClientProvider
                 .Setup(x => x.Get())
@@ -72,6 +80,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public void AndOrgPasswordConfigIsNotSetThenThrowException(string password)
         {
             //Arrange
+            MockValidClientProvider();
             AddSettings(password, "test");
 
             //Act
@@ -88,6 +97,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public void AndUserNameConfigIsNotSetThenThrowException(string username)
         {
             //Arrange
+            MockValidClientProvider();
             AddSettings("password", username);
 
             //Act
@@ -103,22 +113,23 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public async Task ThenVerificationResponseIsReturnedAsync()
         {
             //Arrange
+            MockValidClientProvider();
             AddValidSettings();
             _sut = new LearnerValidationService(_mockClientProvider.Object, Mock.Of<ILogger<LearnerValidationService>>(), _settings);
 
             //Act
-            _learner = await _sut.ValidateLearner("012345678", "012345678", "Ron", "Swanson", "F", DateTime.UtcNow.AddYears(-18));
+            _verificationResponse = await _sut.ValidateLearner("012345678", "012345678", "Ron", "Swanson", "F", DateTime.UtcNow.AddYears(-18));
 
             //Assert
-            _learner.Should().BeOfType<MIAPVerifiedLearner>();
-            _learner.FamilyName.Should().Be(_expectedFamilyName);
-            _learner.GivenName.Should().Be(_expectedGivenName);
+            _verificationResponse.Should().NotBeNull();
+            _verificationResponse.Should().BeOfType<LearnerVerificationResponse>();
         }
 
         [Test]
         public async Task ThenVerificationRequestIsBuiltCorrectly()
         {
             //Arrange
+            MockValidClientProvider();
             AddValidSettings();
             _sut = new LearnerValidationService(_mockClientProvider.Object, Mock.Of<ILogger<LearnerValidationService>>(), _settings);
             var ukprn = "012345678";
@@ -129,7 +140,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             var dateOfBirth = DateTime.UtcNow.AddYears(-20);
 
             //Act
-            _learner = await _sut.ValidateLearner(ukprn, uln, firstName, lastName, gender, dateOfBirth);
+            _verificationResponse = await _sut.ValidateLearner(ukprn, uln, firstName, lastName, gender, dateOfBirth);
 
             //Assert
             _mockClientWrapper.Verify(x =>

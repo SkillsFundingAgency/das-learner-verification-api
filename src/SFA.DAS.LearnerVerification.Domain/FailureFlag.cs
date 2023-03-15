@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace SFA.DAS.LearnerVerification.Types
+namespace SFA.DAS.LearnerVerification.Domain
 {
     public enum FailureFlag
     {

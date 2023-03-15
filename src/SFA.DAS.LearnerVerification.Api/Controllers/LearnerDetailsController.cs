@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SFA.DAS.Funding.ApprenticeshipEarnings.Queries.GetAcademicYearEarnings;
+using SFA.DAS.LearnerVerification.Domain;
 using SFA.DAS.LearnerVerification.Infrastructure.Queries;
 using SFA.DAS.LearnerVerification.Queries.VerifyLearner;
 

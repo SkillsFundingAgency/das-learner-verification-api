@@ -1,5 +1,6 @@
 using LearningRecordsService;
 using Microsoft.Extensions.Logging;
+using SFA.DAS.LearnerVerification.Domain.Mappers;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
 namespace SFA.DAS.LearnerVerification.Domain.Services
@@ -27,7 +28,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
             }
         }
 
-        public async Task<MIAPVerifiedLearner> ValidateLearner(string ukprn, string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
+        public async Task<LearnerVerificationResponse> ValidateLearner(string ukprn, string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
                     }
                 });
 
-                return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner;
+                return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
             }
             catch (Exception ex)
             {
