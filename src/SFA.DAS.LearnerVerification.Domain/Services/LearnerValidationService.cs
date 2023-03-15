@@ -35,6 +35,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
                 var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
                 {
                     UKPRN = ukprn,
+                    //OrganisationRef = _lrsApiSettings.OrgPassword, //TODO: Verify if necessary
                     OrgPassword = _lrsApiSettings.OrgPassword,
                     UserName = _lrsApiSettings.UserName,
                     LearnerToVerify = new MIAPLearnerToVerify()
