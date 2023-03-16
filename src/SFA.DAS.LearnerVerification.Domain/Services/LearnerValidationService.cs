@@ -30,32 +30,24 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
 
         public async Task<LearnerVerificationResponse> ValidateLearner(string ukprn, string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
         {
-            try
+            await using var service = _lrsClientProvider.Get();
+            var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
             {
-                await using var service = _lrsClientProvider.Get();
-                var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
+                UKPRN = ukprn,
+                //OrganisationRef = _lrsApiSettings.OrgPassword, //TODO: Verify if necessary
+                OrgPassword = _lrsApiSettings.OrgPassword,
+                UserName = _lrsApiSettings.UserName,
+                LearnerToVerify = new MIAPLearnerToVerify()
                 {
-                    UKPRN = ukprn,
-                    //OrganisationRef = _lrsApiSettings.OrgPassword, //TODO: Verify if necessary
-                    OrgPassword = _lrsApiSettings.OrgPassword,
-                    UserName = _lrsApiSettings.UserName,
-                    LearnerToVerify = new MIAPLearnerToVerify()
-                    {
-                        ULN = uln,
-                        GivenName = firstName,
-                        FamilyName = lastName,
-                        Gender = gender,
-                        DateOfBirth = dateOfBirth?.ToString("yyyy-MM-dd")
-                    }
-                });
+                    ULN = uln,
+                    GivenName = firstName,
+                    FamilyName = lastName,
+                    Gender = gender,
+                    DateOfBirth = dateOfBirth?.ToString("yyyy-MM-dd")
+                }
+            });
 
-                return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error validating learner");
-                throw;
-            }
+            return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
         }
     }
 }

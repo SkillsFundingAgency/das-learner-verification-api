@@ -32,7 +32,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error attempting to get service");
+                _logger.LogError(ex, "Error attempting to get client");
                 throw;
             }
         }

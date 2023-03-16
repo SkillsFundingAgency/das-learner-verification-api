@@ -6,5 +6,6 @@ namespace SFA.DAS.LearnerVerification.Infrastructure.Configuration
     public class ApplicationSettings
     {
         public LrsApiWcfSettings LrsApiWcfSettings { get; set; }
+        public ApplicationInsights ApplicationInsights { get; set; }
     }
 }
