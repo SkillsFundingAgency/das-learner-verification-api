@@ -6,6 +6,7 @@ using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
+    [TestFixture]
     public class WhenGettingClientCertificate
     {
         private ApplicationSettings _settings;

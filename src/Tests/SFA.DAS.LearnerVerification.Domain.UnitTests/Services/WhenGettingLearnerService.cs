@@ -9,6 +9,7 @@ using SFA.DAS.LearnerVerification.Domain.Wrappers;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
+    [TestFixture]
     public class WhenGettingLearnerService
     {
         private ILearnerVerificationClientWrapper _clientWrapper;

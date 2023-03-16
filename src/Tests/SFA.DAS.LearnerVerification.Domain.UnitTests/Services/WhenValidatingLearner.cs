@@ -1,6 +1,5 @@
 using FluentAssertions;
 using LearningRecordsService;
-using Microsoft.Extensions.Logging;
 using Moq;
 using SFA.DAS.LearnerVerification.Domain.Services;
 using SFA.DAS.LearnerVerification.Domain.Wrappers;
@@ -8,6 +7,7 @@ using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
 {
+    [TestFixture]
     public class WhenValidatingLearner
     {
         private LearnerVerificationResponse _verificationResponse;

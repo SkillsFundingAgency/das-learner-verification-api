@@ -9,6 +9,7 @@ using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
 namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
 {
+    [TestFixture]
     public class WhenCreatingANewLearnerPortTypeClient
     {
         private LearnerPortTypeClient _client;
