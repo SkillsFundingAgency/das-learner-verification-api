@@ -4,7 +4,7 @@ using SFA.DAS.LearnerVerification.Api.Configuration;
 
 namespace SFA.DAS.LearnerVerification.Api.Configuration
 {
-    public class Program
+    public static class Program
     {
         private static void Main(string[] args)
         {

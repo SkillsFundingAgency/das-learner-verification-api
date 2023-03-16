@@ -11,27 +11,21 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
     public class WhenValidatingLearner
     {
         private LearnerVerificationResponse _verificationResponse;
-        private Mock<ILearnerVerificationClientWrapper> _mockClientWrapper;
-        private Mock<ILearnerVerificationServiceClientProvider> _mockClientProvider;
-        private ApplicationSettings _settings;
-        private LearnerValidationService _sut;
+        private readonly Mock<ILearnerVerificationClientWrapper> _mockClientWrapper;
+        private readonly Mock<ILearnerVerificationServiceClientProvider> _mockClientProvider;
+        private readonly ApplicationSettings _settings;
 
         private readonly string _expectedFamilyName = "Dwyer";
         private readonly string _expectedGivenName = "Andy";
         private readonly string _expectedResponseCode = "WSVRC001";
-        private readonly string[] _expectedFailures = new string[0];
+        private readonly string[] _expectedFailures = Array.Empty<string>();
 
         public WhenValidatingLearner()
         {
             _mockClientWrapper = new();
             _mockClientProvider = new();
             _settings = new();
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            //Arrange
+            _verificationResponse = new();
         }
 
         private void MockValidClientProvider()
@@ -84,7 +78,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             AddSettings(password, "test");
 
             //Act
-            Action act = () => { _ = new LearnerValidationService(_mockClientProvider.Object, Mock.Of<ILogger<LearnerValidationService>>(), _settings); };
+            Action act = () => { _ = new LearnerValidationService(_mockClientProvider.Object, _settings); };
 
             //Assert
             act.Should()
@@ -101,7 +95,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             AddSettings("password", username);
 
             //Act
-            Action act = () => { _ = new LearnerValidationService(_mockClientProvider.Object, Mock.Of<ILogger<LearnerValidationService>>(), _settings); };
+            Action act = () => { _ = new LearnerValidationService(_mockClientProvider.Object, _settings); };
 
             //Assert
             act.Should()
@@ -115,7 +109,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             //Arrange
             MockValidClientProvider();
             AddValidSettings();
-            _sut = new LearnerValidationService(_mockClientProvider.Object, Mock.Of<ILogger<LearnerValidationService>>(), _settings);
+            var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings);
 
             //Act
             _verificationResponse = await _sut.ValidateLearner("012345678", "012345678", "Ron", "Swanson", "F", DateTime.UtcNow.AddYears(-18));
@@ -131,7 +125,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             //Arrange
             MockValidClientProvider();
             AddValidSettings();
-            _sut = new LearnerValidationService(_mockClientProvider.Object, Mock.Of<ILogger<LearnerValidationService>>(), _settings);
+            var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings);
             var ukprn = "012345678";
             var uln = "912345678";
             var firstName = "April";

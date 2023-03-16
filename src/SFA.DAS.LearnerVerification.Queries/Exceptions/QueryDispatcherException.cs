@@ -1,4 +1,6 @@
-﻿namespace SFA.DAS.LearnerVerification.Queries.Exceptions
+﻿using System.Runtime.Serialization;
+
+namespace SFA.DAS.LearnerVerification.Queries.Exceptions
 {
     [Serializable]
     public sealed class QueryDispatcherException : Exception
@@ -14,6 +16,11 @@
 
         public QueryDispatcherException(string message, Exception innerException)
             : base(message, innerException)
+        {
+        }
+
+        private QueryDispatcherException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
     }

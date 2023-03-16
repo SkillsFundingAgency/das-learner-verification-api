@@ -1,5 +1,4 @@
 using LearningRecordsService;
-using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerVerification.Domain.Mappers;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
@@ -7,22 +6,20 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
 {
     public class LearnerValidationService : ILearnerValidationService
     {
-        private readonly ILogger<LearnerValidationService> _logger;
         private readonly ILearnerVerificationServiceClientProvider _lrsClientProvider;
-        private readonly LrsApiWcfSettings _lrsApiSettings;
+        private readonly LrsApiWcfSettings? _lrsApiSettings;
 
-        public LearnerValidationService(ILearnerVerificationServiceClientProvider lrsClientProvider, ILogger<LearnerValidationService> logger, ApplicationSettings appSettings)
+        public LearnerValidationService(ILearnerVerificationServiceClientProvider lrsClientProvider, ApplicationSettings appSettings)
         {
             _lrsClientProvider = lrsClientProvider;
-            _logger = logger;
             _lrsApiSettings = appSettings.LrsApiWcfSettings;
 
-            if (string.IsNullOrEmpty(_lrsApiSettings.OrgPassword))
+            if (string.IsNullOrEmpty(_lrsApiSettings?.OrgPassword))
             {
                 throw new ArgumentNullException(nameof(_lrsApiSettings.OrgPassword), $"{nameof(_lrsApiSettings.OrgPassword)} is not specified. This is required to run the app.");
             }
 
-            if (string.IsNullOrEmpty(_lrsApiSettings.UserName))
+            if (string.IsNullOrEmpty(_lrsApiSettings?.UserName))
             {
                 throw new ArgumentNullException(nameof(_lrsApiSettings.UserName), $"{nameof(_lrsApiSettings.UserName)} is not specified. This is required to run the app.");
             }

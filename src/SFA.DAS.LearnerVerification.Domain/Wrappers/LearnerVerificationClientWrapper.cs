@@ -5,7 +5,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Wrappers
     public class LearnerVerificationClientWrapper : ILearnerVerificationClientWrapper
     {
         private readonly LearnerPortTypeClient _client;
-        
+
         public LearnerVerificationClientWrapper(LearnerPortTypeClient client)
         {
             _client = client;

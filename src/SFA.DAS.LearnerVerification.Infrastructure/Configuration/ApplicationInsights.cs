@@ -6,6 +6,6 @@ namespace SFA.DAS.LearnerVerification.Infrastructure.Configuration
     public class ApplicationInsights
     {
         public bool EnableAppInsights { get; set; }
-        public string ConnectionString { get; set; }
+        public string? ConnectionString { get; set; }
     }
 }

@@ -15,12 +15,12 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
         private Fixture _fixture;
         private ApplicationSettings _settings;
         private BasicHttpBinding _basicHttpBinding;
-        private LearnerPortTypeClientFactory _sut;
 
         [SetUp]
         public void Setup()
         {
             //Arrange
+            _client = new();
             _fixture = new Fixture();
             _basicHttpBinding = _fixture.Create<BasicHttpBinding>();
             _settings = new ApplicationSettings();
@@ -63,7 +63,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
         {
             //Arrange
             AddValidLearnerServiceBaseUrl();
-            _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings);
+            var _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings);
 
             //Act
             _client = _sut.Create(_basicHttpBinding);
@@ -77,7 +77,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Factories
         {
             //Arrange
             AddValidLearnerServiceBaseUrl();
-            _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings);
+            var _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings);
 
             //Act
             _client = _sut.Create(_basicHttpBinding);
