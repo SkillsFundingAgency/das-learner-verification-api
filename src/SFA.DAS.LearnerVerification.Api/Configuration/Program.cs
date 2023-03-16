@@ -11,6 +11,7 @@ namespace SFA.DAS.LearnerVerification.Api.Configuration
             var builder = WebApplication.CreateBuilder(args);
 
             builder.SetupConfiguration();
+            builder.ConfigureLogging();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -18,7 +19,6 @@ namespace SFA.DAS.LearnerVerification.Api.Configuration
                 .AddQueryServices()
                 .AddDomainServices();
             builder.Services.AddHealthChecks();
-            builder.Services.AddLogging();
 
             var app = builder.Build();
             app.MapHealthChecks("/ping");

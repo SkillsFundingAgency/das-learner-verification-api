@@ -21,7 +21,7 @@ namespace SFA.DAS.LearnerVerification.Api.Configuration
             builder.Services.AddSingleton(x => applicationSettings);
         }
 
-        public static void AddLogging(this WebApplicationBuilder builder)
+        public static void ConfigureLogging(this WebApplicationBuilder builder)
         {
             var options = new ApplicationInsightsServiceOptions { ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"] };
             builder.Services.AddApplicationInsightsTelemetry(options);
