@@ -1,7 +1,6 @@
 ﻿using SFA.DAS.LearnerVerification.Domain.Services;
 using SFA.DAS.LearnerVerification.Infrastructure.Queries;
 using SFA.DAS.LearnerVerification.Queries.Mappers;
-using SFA.DAS.LearnerVerification.Types;
 
 namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
 {
