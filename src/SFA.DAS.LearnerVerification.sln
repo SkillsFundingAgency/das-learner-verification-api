@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.LearnerVerification
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.LearnerVerification.Infrastructure", "SFA.DAS.LearnerVerification.Infrastructure\SFA.DAS.LearnerVerification.Infrastructure.csproj", "{F9E1C0EE-B4E6-4A2A-B5B4-0BA0BEC27FD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerVerification.Queries.UnitTests", "SFA.DAS.LearnerVerification.Queries.UnitTests\SFA.DAS.LearnerVerification.Queries.UnitTests.csproj", "{B463536F-47B4-442F-9EF3-3C8F0B24E50D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.LearnerVerification.Queries.UnitTests", "SFA.DAS.LearnerVerification.Queries.UnitTests\SFA.DAS.LearnerVerification.Queries.UnitTests.csproj", "{B463536F-47B4-442F-9EF3-3C8F0B24E50D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.LearnerVerification.Api.UnitTests", "SFA.DAS.LearnerVerification.Api.UnitTests\SFA.DAS.LearnerVerification.Api.UnitTests.csproj", "{05A9C867-5DC2-460D-AB2B-CC6858807F8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{B463536F-47B4-442F-9EF3-3C8F0B24E50D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B463536F-47B4-442F-9EF3-3C8F0B24E50D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B463536F-47B4-442F-9EF3-3C8F0B24E50D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05A9C867-5DC2-460D-AB2B-CC6858807F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05A9C867-5DC2-460D-AB2B-CC6858807F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05A9C867-5DC2-460D-AB2B-CC6858807F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05A9C867-5DC2-460D-AB2B-CC6858807F8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{EA4F96F6-9826-46F3-B7EA-189035A78277} = {190C3DE6-9069-48A8-A9E1-639EED97FFF1}
 		{B463536F-47B4-442F-9EF3-3C8F0B24E50D} = {190C3DE6-9069-48A8-A9E1-639EED97FFF1}
+		{05A9C867-5DC2-460D-AB2B-CC6858807F8D} = {190C3DE6-9069-48A8-A9E1-639EED97FFF1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1C4D9936-2743-4446-8491-D75DB2B559F9}

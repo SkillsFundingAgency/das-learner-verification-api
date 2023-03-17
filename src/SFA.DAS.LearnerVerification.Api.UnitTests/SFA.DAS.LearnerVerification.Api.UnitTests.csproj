@@ -24,10 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mappers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\SFA.DAS.LearnerVerification.Api\SFA.DAS.LearnerVerification.Api.csproj" />
     <ProjectReference Include="..\SFA.DAS.LearnerVerification.Queries\SFA.DAS.LearnerVerification.Queries.csproj" />
   </ItemGroup>
 

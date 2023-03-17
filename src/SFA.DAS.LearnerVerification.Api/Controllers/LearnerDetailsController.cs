@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using SFA.DAS.LearnerVerification.Domain;
 using SFA.DAS.LearnerVerification.Infrastructure.Queries;
 using SFA.DAS.LearnerVerification.Queries.VerifyLearner;
 
@@ -21,7 +20,7 @@ namespace SFA.DAS.LearnerVerification.InnerApi.Controllers
         public async Task<IActionResult> VerifyLearnerDetails(string ukprn, string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
         {
             var request = new VerifyLearnerQuery(ukprn, uln, firstName, lastName, gender, dateOfBirth);
-            var response = await _queryDispatcher.Send<VerifyLearnerQuery, LearnerVerificationResponse>(request);
+            var response = await _queryDispatcher.Send<VerifyLearnerQuery, Queries.VerifyLearner.LearnerVerification>(request);
 
             return Ok(response);
         }
