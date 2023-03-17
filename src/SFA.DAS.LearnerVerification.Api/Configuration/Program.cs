@@ -1,9 +1,10 @@
 using SFA.DAS.LearnerVerification.Domain;
 using SFA.DAS.LearnerVerification.Queries;
-using SFA.DAS.LearnerVerification.Api.Configuration;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SFA.DAS.LearnerVerification.Api.Configuration
 {
+    [ExcludeFromCodeCoverage]
     public static class Program
     {
         private static void Main(string[] args)

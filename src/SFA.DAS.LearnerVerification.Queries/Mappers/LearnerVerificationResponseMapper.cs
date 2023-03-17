@@ -3,9 +3,9 @@ using SFA.DAS.LearnerVerification.Types;
 
 namespace SFA.DAS.LearnerVerification.Queries.Mappers
 {
-    internal static class LearnerVerificationResponseMapper
+    public static class LearnerVerificationResponseMapper
     {
-        internal static VerifyLearner.LearnerVerification Map(this LearnerVerificationResponse learnerVerificationResponse)
+        public static VerifyLearner.LearnerVerification Map(this LearnerVerificationResponse learnerVerificationResponse)
         {
             var responseType = learnerVerificationResponse.ResponseCode switch
             {

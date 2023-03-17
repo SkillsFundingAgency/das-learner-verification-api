@@ -2,9 +2,9 @@
 
 namespace SFA.DAS.LearnerVerification.Domain.Mappers
 {
-    internal static class LearnerVerificationResponseMapper
+    public static class MIAPVerifiedLearnerMapper
     {
-        internal static LearnerVerificationResponse Map(this MIAPVerifiedLearner verifiedLearner)
+        public static LearnerVerificationResponse Map(this MIAPVerifiedLearner verifiedLearner)
         {
             if (!Enum.TryParse(verifiedLearner.ResponseCode, true, out LearnerVerificationResponseCode parsedResponseCode))
             {

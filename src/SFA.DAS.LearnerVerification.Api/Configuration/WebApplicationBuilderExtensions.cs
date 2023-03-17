@@ -1,9 +1,11 @@
 ﻿using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SFA.DAS.LearnerVerification.Api.Configuration
 {
+    [ExcludeFromCodeCoverage]
     public static class WebApplicationBuilderExtensions
     {
         public static void SetupConfiguration(this WebApplicationBuilder builder)
