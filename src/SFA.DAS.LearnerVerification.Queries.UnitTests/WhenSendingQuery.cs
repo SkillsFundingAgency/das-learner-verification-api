@@ -1,14 +1,8 @@
 using AutoFixture;
-using Azure.Core;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using SFA.DAS.LearnerVerification.Domain;
-using SFA.DAS.LearnerVerification.Domain.Mappers;
-using SFA.DAS.LearnerVerification.Infrastructure.Queries;
 using SFA.DAS.LearnerVerification.Queries.Exceptions;
 using SFA.DAS.LearnerVerification.Queries.VerifyLearner;
-using System;
 
 namespace SFA.DAS.LearnerVerification.Queries.UnitTests
 {
