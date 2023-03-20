@@ -25,8 +25,7 @@ namespace SFA.DAS.LearnerVerification.Api.Configuration
 
         public static void ConfigureLogging(this WebApplicationBuilder builder)
         {
-            var options = new ApplicationInsightsServiceOptions { ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"] };
-            builder.Services.AddApplicationInsightsTelemetry(options);
+            builder.Services.AddApplicationInsightsTelemetry();
         }
     }
 }
