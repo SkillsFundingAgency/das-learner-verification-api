@@ -12,13 +12,16 @@ namespace SFA.DAS.LearnerVerification.Domain.Mappers
             }
 
             List<FailureFlag> failures = new();
-            foreach (var flag in verifiedLearner.FailureFlag)
+            if (verifiedLearner.FailureFlag != null)
             {
-                if (!Enum.TryParse(flag, true, out FailureFlag parsedFailureFlag))
+                foreach (var flag in verifiedLearner.FailureFlag)
                 {
-                    throw new ArgumentException($"Value {flag} could not be parsed to {nameof(FailureFlag)}.", nameof(verifiedLearner.FailureFlag));
+                    if (!Enum.TryParse(flag, true, out FailureFlag parsedFailureFlag))
+                    {
+                        throw new ArgumentException($"Value {flag} could not be parsed to {nameof(FailureFlag)}.", nameof(verifiedLearner.FailureFlag));
+                    }
+                    failures.Add(parsedFailureFlag);
                 }
-                failures.Add(parsedFailureFlag);
             }
 
             return new LearnerVerificationResponse
