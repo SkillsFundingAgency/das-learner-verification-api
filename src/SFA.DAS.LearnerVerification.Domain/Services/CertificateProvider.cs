@@ -25,9 +25,9 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
                 throw new ArgumentNullException(nameof(_lrsApiSettings.KeyVaultUrl), "KeyVault url is not specified. That is required to run the app.");
             }
 
-            if (string.IsNullOrEmpty(_lrsApiSettings.CertName))
+            if (string.IsNullOrEmpty(_lrsApiSettings.CertificateName))
             {
-                throw new ArgumentNullException(nameof(_lrsApiSettings.CertName), "Cert name added to KeyVault is not specified. That is required to run the app.");
+                throw new ArgumentNullException(nameof(_lrsApiSettings.CertificateName), "Cert name added to KeyVault is not specified. That is required to run the app.");
             }
 
             if (_x509Certificate == null)
@@ -47,7 +47,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
                     ManagedIdentityClientId = _lrsApiSettings.AzureADManagedIdentityClientId
                 }));
 
-                _x509Certificate = client.DownloadCertificate(_lrsApiSettings.CertName);
+                _x509Certificate = client.DownloadCertificate(_lrsApiSettings.CertificateName);
             }
             catch (Exception ex)
             {

@@ -45,7 +45,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         {
             //Arrange
             _settings.LrsApiWcfSettings.KeyVaultUrl = "not null test url";
-            _settings.LrsApiWcfSettings.CertName = certName;
+            _settings.LrsApiWcfSettings.CertificateName = certName;
 
             //Act
             Action act = () => _sut.GetClientCertificate();

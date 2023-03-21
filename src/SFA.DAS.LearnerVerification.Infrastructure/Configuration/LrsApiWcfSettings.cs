@@ -6,7 +6,7 @@ namespace SFA.DAS.LearnerVerification.Infrastructure.Configuration
     public class LrsApiWcfSettings
     {
         public string? AzureADManagedIdentityClientId { get; set; }
-        public string? CertName { get; set; }
+        public string? CertificateName { get; set; }
         public string? KeyVaultUrl { get; set; }
         public string? LearnerServiceBaseUrl { get; set; }
         public string? OrganisationRef { get; set; }
