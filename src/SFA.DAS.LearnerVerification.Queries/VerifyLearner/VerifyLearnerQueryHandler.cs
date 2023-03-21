@@ -16,7 +16,6 @@ namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
         public async Task<LearnerVerification> Handle(VerifyLearnerQuery query, CancellationToken cancellationToken = default)
         {
             var learnerValidationResponse = await _learnerValidationService.ValidateLearner(
-                query.UkPrn,
                 query.Uln,
                 query.FirstName,
                 query.LastName,

@@ -4,9 +4,8 @@ namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
 {
     public class VerifyLearnerQuery : IQuery
     {
-        public VerifyLearnerQuery(string ukprn, string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
+        public VerifyLearnerQuery(string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
         {
-            UkPrn = ukprn;
             Uln = uln;
             FirstName = firstName;
             LastName = lastName;
@@ -14,7 +13,6 @@ namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
             DateOfBirth = dateOfBirth;
         }
 
-        public string UkPrn { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Uln { get; set; }

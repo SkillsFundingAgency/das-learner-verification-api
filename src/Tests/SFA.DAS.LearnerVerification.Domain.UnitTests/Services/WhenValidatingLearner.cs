@@ -112,7 +112,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings);
 
             //Act
-            _verificationResponse = await _sut.ValidateLearner("012345678", "012345678", "Ron", "Swanson", "F", DateTime.UtcNow.AddYears(-18));
+            _verificationResponse = await _sut.ValidateLearner("012345678", "Ron", "Swanson", "F", DateTime.UtcNow.AddYears(-18));
 
             //Assert
             _verificationResponse.Should().NotBeNull();
@@ -134,7 +134,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             var dateOfBirth = DateTime.UtcNow.AddYears(-20);
 
             //Act
-            _verificationResponse = await _sut.ValidateLearner(ukprn, uln, firstName, lastName, gender, dateOfBirth);
+            _verificationResponse = await _sut.ValidateLearner(uln, firstName, lastName, gender, dateOfBirth);
 
             //Assert
             _mockClientWrapper.Verify(x =>

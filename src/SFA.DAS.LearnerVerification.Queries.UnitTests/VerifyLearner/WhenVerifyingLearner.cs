@@ -29,7 +29,7 @@ namespace SFA.DAS.LearnerVerification.Queries.UnitTests.VerifyLearner
             var expectedResult = _fixture.Create<LearnerVerificationResponse>();
 
             _learnerValidationService
-                .Setup(x => x.ValidateLearner(query.UkPrn, query.Uln, query.FirstName, query.LastName, query.Gender, query.DateOfBirth))
+                .Setup(x => x.ValidateLearner(query.Uln, query.FirstName, query.LastName, query.Gender, query.DateOfBirth))
                 .ReturnsAsync(expectedResult);
 
             //Act

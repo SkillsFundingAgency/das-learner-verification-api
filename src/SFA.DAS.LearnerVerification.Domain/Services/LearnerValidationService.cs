@@ -1,4 +1,5 @@
 using LearningRecordsService;
+using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerVerification.Domain.Mappers;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 
@@ -7,11 +8,13 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
     public class LearnerValidationService : ILearnerValidationService
     {
         private readonly ILearnerVerificationServiceClientProvider _lrsClientProvider;
+        private readonly ILogger<LearnerValidationService> _logger;
         private readonly LrsApiWcfSettings _lrsApiSettings;
 
-        public LearnerValidationService(ILearnerVerificationServiceClientProvider lrsClientProvider, ApplicationSettings appSettings)
+        public LearnerValidationService(ILearnerVerificationServiceClientProvider lrsClientProvider, ApplicationSettings appSettings, ILogger<LearnerValidationService> logger)
         {
             _lrsClientProvider = lrsClientProvider;
+            _logger = logger;
             _lrsApiSettings = appSettings.LrsApiWcfSettings;
 
             if (string.IsNullOrEmpty(_lrsApiSettings.OrgPassword))
@@ -25,26 +28,33 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
             }
         }
 
-        public async Task<LearnerVerificationResponse> ValidateLearner(string ukprn, string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
+        public async Task<LearnerVerificationResponse> ValidateLearner(string uln, string firstName, string lastName, string? gender, DateTime? dateOfBirth)
         {
-            await using var service = _lrsClientProvider.Get();
-            var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
+            try
             {
-                UKPRN = ukprn,
-                //OrganisationRef = _lrsApiSettings.OrgPassword, //TODO: Verify if necessary
-                OrgPassword = _lrsApiSettings.OrgPassword,
-                UserName = _lrsApiSettings.UserName,
-                LearnerToVerify = new MIAPLearnerToVerify()
+                await using var service = _lrsClientProvider.Get();
+                var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
                 {
-                    ULN = uln,
-                    GivenName = firstName,
-                    FamilyName = lastName,
-                    Gender = gender,
-                    DateOfBirth = dateOfBirth?.ToString("yyyy-MM-dd")
-                }
-            });
+                    OrganisationRef = _lrsApiSettings.OrganisationRef,
+                    OrgPassword = _lrsApiSettings.OrgPassword,
+                    UserName = _lrsApiSettings.UserName,
+                    LearnerToVerify = new MIAPLearnerToVerify()
+                    {
+                        ULN = uln,
+                        GivenName = firstName,
+                        FamilyName = lastName,
+                        Gender = gender,
+                        DateOfBirth = dateOfBirth?.ToString("yyyy-MM-dd")
+                    }
+                });
 
-            return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
+                return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occured whilst attempting to verify learner details with ULN {uln}.");
+                return null;
+            }
         }
     }
 }

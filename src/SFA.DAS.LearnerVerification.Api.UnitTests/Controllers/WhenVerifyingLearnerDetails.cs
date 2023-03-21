@@ -36,7 +36,7 @@ namespace SFA.DAS.LearnerVerification.Api.UnitTests.Controllers
                     It.IsAny<VerifyLearnerQuery>()))
                 .ReturnsAsync(expectedResult);
 
-            var result = await _sut.VerifyLearnerDetails(ukprn, uln, firstName, lastName, null, null);
+            var result = await _sut.VerifyLearnerDetails(uln, firstName, lastName, null, null);
 
             result.Should().BeOfType<OkObjectResult>();
             var okResult = (OkObjectResult)result;
