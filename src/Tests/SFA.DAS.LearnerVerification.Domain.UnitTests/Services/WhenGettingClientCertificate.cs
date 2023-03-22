@@ -53,7 +53,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             //Assert
             act.Should()
                 .Throw<ArgumentNullException>()
-                .WithMessage("Cert name added to KeyVault is not specified. That is required to run the app. (Parameter 'CertName')");
+                .WithMessage("Certificate name added to KeyVault is not specified. That is required to run the app. (Parameter 'CertificateName')");
         }
     }
 }

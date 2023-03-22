@@ -1,5 +1,6 @@
 using FluentAssertions;
 using LearningRecordsService;
+using Microsoft.Extensions.Logging;
 using Moq;
 using SFA.DAS.LearnerVerification.Domain.Services;
 using SFA.DAS.LearnerVerification.Domain.Wrappers;
@@ -78,7 +79,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             AddSettings(password, "test");
 
             //Act
-            Action act = () => { _ = new LearnerValidationService(_mockClientProvider.Object, _settings); };
+            Action act = () => { _ = new LearnerValidationService(_mockClientProvider.Object, _settings, Mock.Of<ILogger<LearnerValidationService>>()); };
 
             //Assert
             act.Should()
@@ -95,7 +96,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             AddSettings("password", username);
 
             //Act
-            Action act = () => { _ = new LearnerValidationService(_mockClientProvider.Object, _settings); };
+            Action act = () => { _ = new LearnerValidationService(_mockClientProvider.Object, _settings, Mock.Of<ILogger<LearnerValidationService>>()); };
 
             //Assert
             act.Should()
@@ -109,7 +110,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             //Arrange
             MockValidClientProvider();
             AddValidSettings();
-            var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings);
+            var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings, Mock.Of<ILogger<LearnerValidationService>>());
 
             //Act
             _verificationResponse = await _sut.ValidateLearner("012345678", "Ron", "Swanson", "F", DateTime.UtcNow.AddYears(-18));
@@ -125,7 +126,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             //Arrange
             MockValidClientProvider();
             AddValidSettings();
-            var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings);
+            var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings, Mock.Of<ILogger<LearnerValidationService>>());
             var ukprn = "012345678";
             var uln = "912345678";
             var firstName = "April";

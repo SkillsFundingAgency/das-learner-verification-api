@@ -27,7 +27,7 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
 
             if (string.IsNullOrEmpty(_lrsApiSettings.CertificateName))
             {
-                throw new ArgumentNullException(nameof(_lrsApiSettings.CertificateName), "Cert name added to KeyVault is not specified. That is required to run the app.");
+                throw new ArgumentNullException(nameof(_lrsApiSettings.CertificateName), "Certificate name added to KeyVault is not specified. That is required to run the app.");
             }
 
             if (_x509Certificate == null)
@@ -42,11 +42,8 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
         {
             try
             {
-                var client = new CertificateClient(new Uri(_lrsApiSettings.KeyVaultUrl), new DefaultAzureCredential(new DefaultAzureCredentialOptions
-                {
-                    ManagedIdentityClientId = _lrsApiSettings.AzureADManagedIdentityClientId
-                }));
-
+                var keyVaultUrl = GetKeyVaultUrl();
+                var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
                 _x509Certificate = client.DownloadCertificate(_lrsApiSettings.CertificateName);
             }
             catch (Exception ex)
@@ -54,6 +51,13 @@ namespace SFA.DAS.LearnerVerification.Domain.Services
                 _logger.LogError(ex, "Error setting up client certificate");
                 throw;
             }
+        }
+
+        private static string GetKeyVaultUrl()
+        {
+            var keyVaultName = Environment.GetEnvironmentVariable("keyVaultName");
+            var keyVaultUrl = $"https://{keyVaultName}.vault.azure.net";
+            return keyVaultUrl;
         }
     }
 }
