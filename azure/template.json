@@ -67,6 +67,7 @@
         "resourceNamePrefix": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
         "resourceGroupName": "[concat(variables('resourceNamePrefix'), 'api-rg')]",
         "appServiceName": "[concat(variables('resourceNamePrefix'), 'api-as')]",
+        "keyVaultName": "[concat(variables('resourceNamePrefix'),'-kv')]",
         "configNames": "SFA.DAS.LearnerVerification.Api"
     },
     "resources": [
@@ -195,6 +196,47 @@
                     },
                     "ipSecurityRestrictions": {
                         "value": "[parameters('backEndAccessRestrictions')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[variables('resourceGroupName')]"
+            ]
+        },
+        {
+            "apiVersion": "2019-05-10",
+            "name": "[concat(variables('keyVaultName'), '-', parameters('utcValue'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'keyvault.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "enabledForTemplateDeployment": {
+                        "value": true
+                    },
+                    "enableFirewall": {
+                        "value": true
+                    },
+                    "enableRbacAuthorization": {
+                        "Value": true
+                    },
+                    "subnetResourceIdList": {
+                        "value": "[parameters('sharedBackEndSubnetResourceId')]"
+                    },
+                    "allowTrustedMicrosoftServices": {
+                        "value": true
+                    },
+                    "logAnalyticsWorkspaceName": {
+                        "value": "[parameters('logAnalyticsWorkspaceName')]"
+                    },
+                    "logAnalyticsWorkspaceResourceGroupName": {
+                        "value": "[parameters('sharedManagementResourceGroup')]"
                     }
                 }
             },
