@@ -28,7 +28,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public void AndKeyVaultConfigIsNotSetThenThrowException(string url)
         {
             //Arrange
-            _settings.LrsApiWcfSettings.KeyVaultUrl = url;
+            _settings.KeyVaultUrl = url;
 
             //Act
             Action act = () => _sut.GetClientCertificate();
@@ -36,7 +36,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             //Assert
             act.Should()
                 .Throw<ArgumentNullException>()
-                .WithMessage("KeyVault url is not specified. That is required to run the app. (Parameter 'KeyVaultUrl')");
+                .WithMessage("KeyVaultUrl is not specified. That is required to run the app. (Parameter 'KeyVaultUrl')");
         }
 
         [TestCase(null)]
@@ -44,7 +44,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
         public void AndCertNameConfigIsNotSetThenThrowException(string certName)
         {
             //Arrange
-            _settings.LrsApiWcfSettings.KeyVaultUrl = "not null test url";
+            _settings.KeyVaultUrl = "not null test url";
             _settings.LrsApiWcfSettings.CertificateName = certName;
 
             //Act
@@ -53,7 +53,7 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             //Assert
             act.Should()
                 .Throw<ArgumentNullException>()
-                .WithMessage("Certificate name added to KeyVault is not specified. That is required to run the app. (Parameter 'CertificateName')");
+                .WithMessage("CertificateName for LRS Web Service is not specified. That is required to run the app. (Parameter 'CertificateName')");
         }
     }
 }
