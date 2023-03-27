@@ -127,7 +127,6 @@ namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Services
             MockValidClientProvider();
             AddValidSettings();
             var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings, Mock.Of<ILogger<LearnerValidationService>>());
-            var ukprn = "012345678";
             var uln = "912345678";
             var firstName = "April";
             var lastName = "Ludgate";

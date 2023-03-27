@@ -25,7 +25,6 @@ namespace SFA.DAS.LearnerVerification.Api.UnitTests.Controllers
         [Test]
         public async Task ThenApprenticeshipsAreReturned()
         {
-            var ukprn = _fixture.Create<string>();
             var uln = _fixture.Create<string>();
             var firstName = _fixture.Create<string>();
             var lastName = _fixture.Create<string>();
