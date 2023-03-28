@@ -1,4 +1,4 @@
-using SFA.DAS.LearnerVerification.Domain;
+using SFA.DAS.LearnerVerification.Services;
 using SFA.DAS.LearnerVerification.Queries;
 using System.Diagnostics.CodeAnalysis;
 

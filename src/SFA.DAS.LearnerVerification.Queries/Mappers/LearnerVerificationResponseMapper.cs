@@ -1,4 +1,4 @@
-﻿using SFA.DAS.LearnerVerification.Domain;
+﻿using SFA.DAS.LearnerVerification.Services;
 using SFA.DAS.LearnerVerification.Types;
 
 namespace SFA.DAS.LearnerVerification.Queries.Mappers
@@ -25,35 +25,35 @@ namespace SFA.DAS.LearnerVerification.Queries.Mappers
                 {
                     switch (flag)
                     {
-                        case Domain.FailureFlag.VRF1:
+                        case Services.FailureFlag.VRF1:
                             matchingErrors.Add(LearnerDetailMatchingError.GivenDoesntMatchGiven);
                             break;
 
-                        case Domain.FailureFlag.VRF2:
+                        case Services.FailureFlag.VRF2:
                             matchingErrors.Add(LearnerDetailMatchingError.GivenDoesntMatchFamily);
                             break;
 
-                        case Domain.FailureFlag.VRF3:
+                        case Services.FailureFlag.VRF3:
                             matchingErrors.Add(LearnerDetailMatchingError.GivenDoesntMatchPreviousFamily);
                             break;
 
-                        case Domain.FailureFlag.VRF4:
+                        case Services.FailureFlag.VRF4:
                             matchingErrors.Add(LearnerDetailMatchingError.FamilyDoesntMatchGiven);
                             break;
 
-                        case Domain.FailureFlag.VRF5:
+                        case Services.FailureFlag.VRF5:
                             matchingErrors.Add(LearnerDetailMatchingError.FamilyDoesntMatchFamily);
                             break;
 
-                        case Domain.FailureFlag.VRF6:
+                        case Services.FailureFlag.VRF6:
                             matchingErrors.Add(LearnerDetailMatchingError.FamilyDoesntMatchPreviousFamily);
                             break;
 
-                        case Domain.FailureFlag.VRF7:
+                        case Services.FailureFlag.VRF7:
                             matchingErrors.Add(LearnerDetailMatchingError.DateOfBirthDoesntMatchDateOfBirth);
                             break;
 
-                        case Domain.FailureFlag.VRF8:
+                        case Services.FailureFlag.VRF8:
                             matchingErrors.Add(LearnerDetailMatchingError.GenderDoesntMatchGender);
                             break;
 
