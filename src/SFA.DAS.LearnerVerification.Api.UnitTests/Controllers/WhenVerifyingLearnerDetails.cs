@@ -2,8 +2,8 @@ using AutoFixture;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using SFA.DAS.LearnerVerification.Infrastructure.Queries;
-using SFA.DAS.LearnerVerification.InnerApi.Controllers;
+using SFA.DAS.LearnerVerification.Api.Controllers;
+using SFA.DAS.LearnerVerification.Queries;
 using SFA.DAS.LearnerVerification.Queries.VerifyLearner;
 
 namespace SFA.DAS.LearnerVerification.Api.UnitTests.Controllers

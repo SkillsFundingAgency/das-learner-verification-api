@@ -1,10 +1,9 @@
 using AutoFixture;
 using FluentAssertions;
 using LearningRecordsService;
-using SFA.DAS.LearnerVerification.Domain;
 using SFA.DAS.LearnerVerification.Domain.Mappers;
 
-namespace SFA.DAS.LearnerVerification.Queries.UnitTests
+namespace SFA.DAS.LearnerVerification.Domain.UnitTests.Mappers
 {
     [TestFixture]
     public class WhenMappingMIAPVerifiedLearner
@@ -35,7 +34,7 @@ namespace SFA.DAS.LearnerVerification.Queries.UnitTests
                 .Create();
 
             //Act
-            var result = MIAPVerifiedLearnerMapper.Map(verificationResponse);
+            var result = verificationResponse.Map();
 
             //Assert
             result.Should().NotBeNull();
@@ -57,7 +56,7 @@ namespace SFA.DAS.LearnerVerification.Queries.UnitTests
                 .Create();
 
             //Act
-            Action act = () => { _ = MIAPVerifiedLearnerMapper.Map(verificationResponse); };
+            Action act = () => { _ = verificationResponse.Map(); };
 
             //Assert
             act.Should()
@@ -80,7 +79,7 @@ namespace SFA.DAS.LearnerVerification.Queries.UnitTests
                 .Create();
 
             //Act
-            var result = MIAPVerifiedLearnerMapper.Map(verificationResponse);
+            var result = verificationResponse.Map();
 
             //Assert
             result.Should().NotBeNull();
@@ -99,7 +98,7 @@ namespace SFA.DAS.LearnerVerification.Queries.UnitTests
                 .Create();
 
             //Act
-            Action act = () => { _ = MIAPVerifiedLearnerMapper.Map(verificationResponse); };
+            Action act = () => { _ = verificationResponse.Map(); };
 
             //Assert
             act.Should()

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using SFA.DAS.LearnerVerification.Infrastructure.Queries;
+using SFA.DAS.LearnerVerification.Queries;
 using SFA.DAS.LearnerVerification.Queries.VerifyLearner;
 
-namespace SFA.DAS.LearnerVerification.InnerApi.Controllers
+namespace SFA.DAS.LearnerVerification.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]/")]

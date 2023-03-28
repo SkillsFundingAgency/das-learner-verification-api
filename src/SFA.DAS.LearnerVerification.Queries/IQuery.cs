@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.LearnerVerification.Infrastructure.Queries
+﻿namespace SFA.DAS.LearnerVerification.Queries
 {
     public interface IQuery
     {

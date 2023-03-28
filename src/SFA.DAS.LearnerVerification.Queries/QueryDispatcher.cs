@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SFA.DAS.LearnerVerification.Infrastructure.Queries;
 using SFA.DAS.LearnerVerification.Queries.Exceptions;
 
 namespace SFA.DAS.LearnerVerification.Queries

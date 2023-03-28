@@ -1,6 +1,4 @@
-﻿using SFA.DAS.LearnerVerification.Infrastructure.Queries;
-
-namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
+﻿namespace SFA.DAS.LearnerVerification.Queries.VerifyLearner
 {
     public class VerifyLearnerQuery : IQuery
     {
