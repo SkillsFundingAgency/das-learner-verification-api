@@ -15,7 +15,7 @@ This repository abstracts calls to perform learner verification (such as verifyi
 
 ```
 The Learner Verification Inner API connects to the LRS Web Service to allow the following operations:
-- _verify_ - Verifies the existence of a learner using ULN, first name, last name and also optionally, gender and date of birth
+- verify - Verifies the existence of a learner using ULN, first name, last name and also optionally, gender and date of birth
 ```
 
 ## 🚀 Installation
@@ -26,7 +26,7 @@ The Learner Verification Inner API connects to the LRS Web Service to allow the 
 * A clone of this repository
 * A code editor that supports .NET 6
 * An Azure Table Storage emulator
-* DevOps team must ensure that your AAD account is given the "Key Vault Certificates Officer" role on the key vault _das-at-lrnrvrf-kv_ in order to successfully access secrets from the Key Vault
+* In order to successfully access the certificate from the Key Vault, DevOps team must ensure that your AAD account is given the "Key Vault Certificates Officer" and "Key Vault Secrets Officer" role on the key vault das-at-lrnrvrf-kv. Your IP address must also be whitelisted on the key vault's firewall.
 ```
 ### Config
 
@@ -52,9 +52,9 @@ _***Populate JSON below using config for AT environment from das-employer-config
 ```json
 {
   "ApplicationSettings": {
-    "KeyVaultUrl": "***",
+    "LearnerVerificationKeyVaultUrl": "***",
     "LrsApiWcfSettings": {
-      "CertificateName": "***",
+      "LRSCertificateName": "***",
       "LearnerServiceBaseUrl": "***",
       "OrganisationRef": "***",
       "OrgPassword": "***",
