@@ -2,6 +2,7 @@ using LearningRecordsService;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerVerification.Services.Mappers;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
+using System.ServiceModel;
 
 namespace SFA.DAS.LearnerVerification.Services.Services
 {
@@ -49,6 +50,11 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 });
 
                 return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
+            }
+            catch (FaultException<MIAPAPIException> ex)
+            {
+                _logger.LogError(ex.Detail.Description, $"Error ({ex.Detail.ErrorCode}) occured whilst attempting to verify learner details with ULN {uln}.");
+                return null;
             }
             catch (Exception ex)
             {
