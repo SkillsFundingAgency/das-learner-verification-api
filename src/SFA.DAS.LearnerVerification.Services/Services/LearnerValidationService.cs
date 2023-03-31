@@ -54,12 +54,12 @@ namespace SFA.DAS.LearnerVerification.Services.Services
             catch (FaultException<MIAPAPIException> ex)
             {
                 _logger.LogError(ex.Detail.Description, $"Error ({ex.Detail.ErrorCode}) occured whilst attempting to verify learner details with ULN {uln}.");
-                return null;
+                throw;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occured whilst attempting to verify learner details with ULN {uln}.");
-                return null;
+                throw;
             }
         }
     }
