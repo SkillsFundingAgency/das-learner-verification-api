@@ -36,7 +36,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Services
             //Assert
             act.Should()
                 .Throw<ArgumentNullException>()
-                .WithMessage("KeyVaultUrl is not specified. That is required to run the app. (Parameter 'KeyVaultUrl')");
+                .WithMessage("LearnerVerificationKeyVaultUrl is not specified. That is required to run the app. (Parameter 'LearnerVerificationKeyVaultUrl')");
         }
 
         [TestCase(null)]
@@ -53,7 +53,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Services
             //Assert
             act.Should()
                 .Throw<ArgumentNullException>()
-                .WithMessage("CertificateName for LRS Web Service is not specified. That is required to run the app. (Parameter 'CertificateName')");
+                .WithMessage("LRSCertificateName for LRS Web Service is not specified. That is required to run the app. (Parameter 'LRSCertificateName')");
         }
     }
 }
