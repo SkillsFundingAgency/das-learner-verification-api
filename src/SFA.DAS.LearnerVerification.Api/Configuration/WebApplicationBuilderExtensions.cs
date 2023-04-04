@@ -12,7 +12,7 @@ namespace SFA.DAS.LearnerVerification.Api.Configuration
         {
             builder.Configuration.AddAzureTableStorage(options =>
             {
-                options.ConfigurationKeys = new[] { "SFA.DAS.LearnerVerification.Api" };
+                options.ConfigurationKeys = new[] { "SFA.DAS.LearnerVerification" };
                 options.StorageConnectionString = builder.Configuration["ConfigurationStorageConnectionString"];
                 options.EnvironmentName = builder.Configuration["EnvironmentName"];
                 options.PreFixConfigurationKeys = false;
