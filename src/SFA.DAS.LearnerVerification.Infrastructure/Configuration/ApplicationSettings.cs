@@ -6,6 +6,6 @@ namespace SFA.DAS.LearnerVerification.Infrastructure.Configuration
     public class ApplicationSettings
     {
         public LrsApiWcfSettings LrsApiWcfSettings { get; set; }
-        public string? KeyVaultUrl { get; set; }
+        public string? LearnerVerificationKeyVaultUrl { get; set; }
     }
 }

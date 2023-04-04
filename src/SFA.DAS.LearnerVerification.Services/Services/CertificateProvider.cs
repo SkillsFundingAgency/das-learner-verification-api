@@ -20,14 +20,14 @@ namespace SFA.DAS.LearnerVerification.Services.Services
 
         public X509Certificate2 GetClientCertificate()
         {
-            if (string.IsNullOrEmpty(_appSettings.KeyVaultUrl))
+            if (string.IsNullOrEmpty(_appSettings.LearnerVerificationKeyVaultUrl))
             {
-                throw new ArgumentNullException(nameof(_appSettings.KeyVaultUrl), $"{nameof(_appSettings.KeyVaultUrl)} is not specified. That is required to run the app.");
+                throw new ArgumentNullException(nameof(_appSettings.LearnerVerificationKeyVaultUrl), $"{nameof(_appSettings.LearnerVerificationKeyVaultUrl)} is not specified. That is required to run the app.");
             }
 
-            if (string.IsNullOrEmpty(_appSettings.LrsApiWcfSettings.CertificateName))
+            if (string.IsNullOrEmpty(_appSettings.LrsApiWcfSettings.LRSCertificateName))
             {
-                throw new ArgumentNullException(nameof(_appSettings.LrsApiWcfSettings.CertificateName), $"{nameof(_appSettings.LrsApiWcfSettings.CertificateName)} for LRS Web Service is not specified. That is required to run the app.");
+                throw new ArgumentNullException(nameof(_appSettings.LrsApiWcfSettings.LRSCertificateName), $"{nameof(_appSettings.LrsApiWcfSettings.LRSCertificateName)} for LRS Web Service is not specified. That is required to run the app.");
             }
 
             if (_x509Certificate == null)
@@ -42,8 +42,8 @@ namespace SFA.DAS.LearnerVerification.Services.Services
         {
             try
             {
-                var client = new CertificateClient(new Uri(_appSettings.KeyVaultUrl), new DefaultAzureCredential());
-                _x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.CertificateName);
+                var client = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
+                _x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName);
             }
             catch (Exception ex)
             {
