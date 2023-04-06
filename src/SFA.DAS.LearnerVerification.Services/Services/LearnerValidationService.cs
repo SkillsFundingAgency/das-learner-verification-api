@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerVerification.Services.Mappers;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 using System.ServiceModel;
+using Newtonsoft.Json;
 
 namespace SFA.DAS.LearnerVerification.Services.Services
 {
@@ -49,9 +50,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                     }
                 });
 
-                _logger.LogInformation($"Response: {learnerVerificationResponse}");
-                _logger.LogInformation($"VerifyLearnerResponse: {learnerVerificationResponse.VerifyLearnerResponse}");
-                _logger.LogInformation($"VerifiedLearner: {learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner}");
+                _logger.LogInformation($"Response: {JsonConvert.SerializeObject(learnerVerificationResponse)}");
 
                 return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
             }
