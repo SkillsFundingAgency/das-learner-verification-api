@@ -49,6 +49,8 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                     }
                 });
 
+                _logger.LogInformation($"Response: {learnerVerificationResponse.ToString()}");
+
                 return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
             }
             catch (FaultException<MIAPAPIException> ex)
