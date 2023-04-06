@@ -49,7 +49,9 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                     }
                 });
 
-                _logger.LogInformation($"Response: {learnerVerificationResponse.ToString()}");
+                _logger.LogInformation($"Response: {learnerVerificationResponse}");
+                _logger.LogInformation($"VerifyLearnerResponse: {learnerVerificationResponse.VerifyLearnerResponse}");
+                _logger.LogInformation($"VerifiedLearner: {learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner}");
 
                 return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
             }
