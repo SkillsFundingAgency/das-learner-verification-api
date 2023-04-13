@@ -32,7 +32,6 @@ namespace SFA.DAS.LearnerVerification.Api.Configuration
             app.UseAuthorization();
             app.MapControllers();
 
-            app.Logger.LogInformation("App starting");
             app.Run();
         }
     }

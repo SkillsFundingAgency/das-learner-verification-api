@@ -50,7 +50,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                     }
                 });
 
-                _logger.LogInformation($"Response: {JsonConvert.SerializeObject(learnerVerificationResponse)}");
+                _logger.LogError($"Response: {JsonConvert.SerializeObject(learnerVerificationResponse)}");
 
                 return learnerVerificationResponse.VerifyLearnerResponse.VerifiedLearner.Map();
             }
