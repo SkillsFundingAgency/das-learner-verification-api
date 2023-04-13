@@ -27,9 +27,12 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
         {
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
             client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
-            _logger.LogError($"Certificate: {client.ClientCredentials.ClientCertificate.Certificate}");
-            _logger.LogError($"Certificate thumbprint: {client.ClientCredentials.ClientCertificate.Certificate.Thumbprint}");
-            _logger.LogError($"Certificate serial no: {client.ClientCredentials.ClientCertificate.Certificate.SerialNumber}");
+            if (client.ClientCredentials.ClientCertificate.Certificate != null)
+            {
+                _logger.LogError($"Certificate: {client.ClientCredentials.ClientCertificate.Certificate}");
+                _logger.LogError($"Certificate thumbprint: {client.ClientCredentials.ClientCertificate.Certificate.Thumbprint}");
+                _logger.LogError($"Certificate serial no: {client.ClientCredentials.ClientCertificate.Certificate.SerialNumber}");
+            }
             return client;
         }
     }
