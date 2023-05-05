@@ -26,13 +26,16 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
         public LearnerPortTypeClient Create(BasicHttpBinding binding)
         {
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
-            client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
-            if (client.ClientCredentials.ClientCertificate.Certificate != null)
-            {
-                _logger.LogError($"Certificate: {client.ClientCredentials.ClientCertificate.Certificate}");
-                _logger.LogError($"Certificate thumbprint: {client.ClientCredentials.ClientCertificate.Certificate.Thumbprint}");
-                _logger.LogError($"Certificate serial no: {client.ClientCredentials.ClientCertificate.Certificate.SerialNumber}");
-            }
+            var certificate = _certificateProvider.GetClientCertificate();
+            client.ClientCredentials.ClientCertificate.Certificate = certificate;
+            var endpointBehavior = new CustomEndpointBehavior(certificate);
+            client.Endpoint.EndpointBehaviors.Add(endpointBehavior);
+            //if (client.ClientCredentials.ClientCertificate.Certificate != null)
+            //{
+            //    _logger.LogError($"Certificate: {client.ClientCredentials.ClientCertificate.Certificate}");
+            //    _logger.LogError($"Certificate thumbprint: {client.ClientCredentials.ClientCertificate.Certificate.Thumbprint}");
+            //    _logger.LogError($"Certificate serial no: {client.ClientCredentials.ClientCertificate.Certificate.SerialNumber}");
+            //}
             return client;
         }
     }
