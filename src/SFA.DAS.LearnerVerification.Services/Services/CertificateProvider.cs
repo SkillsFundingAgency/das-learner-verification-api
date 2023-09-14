@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using Azure.Identity;
 using Azure.Security.KeyVault.Certificates;
 using Microsoft.Extensions.Logging;
@@ -40,10 +41,21 @@ namespace SFA.DAS.LearnerVerification.Services.Services
 
         private void SetupClientCertificate()
         {
+            X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.MachineKeySet;
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                keyStorageFlags |= X509KeyStorageFlags.EphemeralKeySet;
+            }
+
+            DownloadCertificateOptions options = new DownloadCertificateOptions(_appSettings.LrsApiWcfSettings.LRSCertificateName)
+            {
+                KeyStorageFlags = keyStorageFlags
+            };
             try
             {
                 var client = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
-                _x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName);
+                
+                _x509Certificate = client.DownloadCertificate(options);
             }
             catch (Exception ex)
             {
