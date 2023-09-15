@@ -74,7 +74,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 KeyVaultSecret certificateSecret = secretClient.GetSecret(_appSettings.LrsApiWcfSettings.LRSCertificateName);
                 // Create an X.509 certificate from the certificate's secret value
                 byte[] certificateBytes = Convert.FromBase64String(certificateSecret.Value);
-                clientCertificate = new X509Certificate2(certificateBytes);
+                clientCertificate = new X509Certificate2(certificateBytes, (string)null, X509KeyStorageFlags.MachineKeySet);
 
             }
             catch (Exception ex)
