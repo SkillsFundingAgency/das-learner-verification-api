@@ -35,7 +35,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
             try
             {
                 await using var service = _lrsClientProvider.Get();
-                
+                System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
                 var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
                 {
                     OrganisationRef = _lrsApiSettings.OrganisationRef,
