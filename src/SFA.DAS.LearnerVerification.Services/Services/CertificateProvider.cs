@@ -1,10 +1,5 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Policy;
+﻿using System.Security.Cryptography.X509Certificates;
 using Azure.Identity;
-using Azure.Security.KeyVault.Certificates;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
@@ -74,7 +69,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 KeyVaultSecret certificateSecret = secretClient.GetSecret(_appSettings.LrsApiWcfSettings.LRSCertificateName);
                 // Create an X.509 certificate from the certificate's secret value
                 byte[] certificateBytes = Convert.FromBase64String(certificateSecret.Value);
-                clientCertificate = new X509Certificate2(certificateBytes, (string)null, X509KeyStorageFlags.MachineKeySet);
+                clientCertificate = new X509Certificate2(certificateBytes, (string)null, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
 
             }
             catch (Exception ex)
