@@ -24,7 +24,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 var binding = new BasicHttpBinding();
                 binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Certificate;
                 binding.Security.Mode = BasicHttpSecurityMode.Transport;
-                binding.UseDefaultWebProxy = true;
+                //binding.UseDefaultWebProxy = true;
 
                 var service = _factory.Create(binding);
 
