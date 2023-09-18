@@ -4,6 +4,7 @@ using SFA.DAS.LearnerVerification.Services.Services;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Azure;
+using Newtonsoft.Json;
 
 namespace SFA.DAS.LearnerVerification.Services.Factories
 {
@@ -28,13 +29,14 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
         {
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
             client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
+    
             
             if (client.ClientCredentials.ClientCertificate.Certificate != null)
             {
                 _logger.LogError($"Certificate: {client.ClientCredentials.ClientCertificate.Certificate}");
                 _logger.LogError($"Certificate thumbprint: {client.ClientCredentials.ClientCertificate.Certificate.Thumbprint}");
                 _logger.LogError($"Certificate serial no: {client.ClientCredentials.ClientCertificate.Certificate.SerialNumber}");
-                _logger.LogError($"SOAP Client properties: {client.ToString()}");
+                _logger.LogError($"Certificate validation: {client.ClientCredentials.ClientCertificate.Certificate.Verify()}");
             }
             return client;
         }
