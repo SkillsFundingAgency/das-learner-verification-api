@@ -59,19 +59,19 @@ namespace SFA.DAS.LearnerVerification.Services.Services
 
                     _x509Certificate = client.DownloadCertificate(options).Value;
 
-                // Create an instance of CertificateClient to retrieve the certificate
-                //var certificateClient = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
-                //// Retrieve the certificate from Azure Key Vault
-                //KeyVaultCertificateWithPolicy certificate = certificateClient.GetCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName);
+                //// Create an instance of CertificateClient to retrieve the certificate
+                ////var certificateClient = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
+                ////// Retrieve the certificate from Azure Key Vault
+                ////KeyVaultCertificateWithPolicy certificate = certificateClient.GetCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName);
 
-                // Create an instance of SecretClient to retrieve the certificate's secret
-                //var secretClient = new SecretClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
+                //// Create an instance of SecretClient to retrieve the certificate's secret
+                ////var secretClient = new SecretClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
 
-                // Retrieve the certificate's secret
-                //KeyVaultSecret certificateSecret = secretClient.GetSecret(_appSettings.LrsApiWcfSettings.LRSCertificateName);
-                // Create an X.509 certificate from the certificate's secret value
-                //byte[] certificateBytes = Convert.FromBase64String(certificateSecret.Value);
-                //clientCertificate = new X509Certificate2(certificateBytes, (string)null, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
+                //// Retrieve the certificate's secret
+                ////KeyVaultSecret certificateSecret = secretClient.GetSecret(_appSettings.LrsApiWcfSettings.LRSCertificateName);
+                //// Create an X.509 certificate from the certificate's secret value
+                ////byte[] certificateBytes = Convert.FromBase64String(certificateSecret.Value);
+                ////clientCertificate = new X509Certificate2(certificateBytes, (string)null, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
 
             }
             catch (Exception ex)
