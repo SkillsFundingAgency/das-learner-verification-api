@@ -30,6 +30,12 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Services
             //Act
             _clientWrapper = _sut.Get();
         }
+        [TearDown]
+        public void CleanUp()
+        {
+            _clientWrapper.DisposeAsync();
+
+        }
 
         [Test]
         public void ThenCorrectServiceIsReturned()

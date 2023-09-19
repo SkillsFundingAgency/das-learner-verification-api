@@ -28,6 +28,13 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Factories
             _settings = new ApplicationSettings();
         }
 
+        [TearDown]
+        public void CleanUp()
+        {
+            _client.Close();
+
+        }
+
         private void AddLearnerServiceBaseUrl(string? url)
         {
             _settings.LrsApiWcfSettings = new LrsApiWcfSettings
@@ -46,7 +53,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Factories
 
         [TestCase(null)]
         [TestCase("")]
-        public void AndKeyVaultConfigIsNotSetThenThrowException(string url)
+        public void AndKeyVaultConfigIsNotSetThenThrowException(string? url)
         {
             //Arrange
             AddLearnerServiceBaseUrl(url);

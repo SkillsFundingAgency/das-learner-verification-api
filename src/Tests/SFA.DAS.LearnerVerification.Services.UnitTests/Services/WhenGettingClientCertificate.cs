@@ -25,7 +25,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Services
 
         [TestCase(null)]
         [TestCase("")]
-        public void AndKeyVaultConfigIsNotSetThenThrowException(string url)
+        public void AndKeyVaultConfigIsNotSetThenThrowException(string? url)
         {
             //Arrange
             _settings.LearnerVerificationKeyVaultUrl = url;
@@ -41,7 +41,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Services
 
         [TestCase(null)]
         [TestCase("")]
-        public void AndCertNameConfigIsNotSetThenThrowException(string certName)
+        public void AndCertNameConfigIsNotSetThenThrowException(string? certName)
         {
             //Arrange
             _settings.LearnerVerificationKeyVaultUrl = "not null test url";

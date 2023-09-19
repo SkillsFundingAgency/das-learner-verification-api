@@ -72,7 +72,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Services
 
         [TestCase(null)]
         [TestCase("")]
-        public void AndOrgPasswordConfigIsNotSetThenThrowException(string password)
+        public void AndOrgPasswordConfigIsNotSetThenThrowException(string? password)
         {
             //Arrange
             MockValidClientProvider();
@@ -89,7 +89,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Services
 
         [TestCase(null)]
         [TestCase("")]
-        public void AndUserNameConfigIsNotSetThenThrowException(string username)
+        public void AndUserNameConfigIsNotSetThenThrowException(string? username)
         {
             //Arrange
             MockValidClientProvider();
