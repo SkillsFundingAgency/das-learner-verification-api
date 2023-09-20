@@ -1,5 +1,8 @@
-﻿using System.ServiceModel;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel;
 using System.ServiceModel.Channels;
+using System.ServiceModel.Security;
 using LearningRecordsService;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerVerification.Services.Factories;
@@ -28,6 +31,15 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 binding.UseDefaultWebProxy = true;
   
                 var service = _factory.Create(binding);
+               
+                service.ClientCredentials.ServiceCertificate.SslCertificateAuthentication = new X509ServiceCertificateAuthentication
+                {
+                    CertificateValidationMode = X509CertificateValidationMode.None,
+                    RevocationMode = X509RevocationMode.NoCheck
+                    
+                };
+                //service.ClientCredentials.ServiceCertificate.SslCertificateAuthentication.CertificateValidationMode = X509CertificateValidationMode.Custom;
+                //service.ClientCredentials.ServiceCertificate.SslCertificateAuthentication.CustomCertificateValidator = new Validator();
 
                 return new LearnerVerificationClientWrapper(service);
             }
