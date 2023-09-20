@@ -104,47 +104,47 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Services
                 .WithMessage("UserName is not specified. This is required to run the app. (Parameter 'UserName')");
         }
 
-        //[Test]
-        //public async Task ThenVerificationResponseIsReturnedAsync()
-        //{
-        //    //Arrange
-        //    MockValidClientProvider();
-        //    AddValidSettings();
-        //    var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings, Mock.Of<ILogger<LearnerValidationService>>());
+        [Test]
+        public async Task ThenVerificationResponseIsReturnedAsync()
+        {
+            //Arrange
+            MockValidClientProvider();
+            AddValidSettings();
+            var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings, Mock.Of<ILogger<LearnerValidationService>>());
 
-        //    //Act
-        //    _verificationResponse = await _sut.ValidateLearner("012345678", "Ron", "Swanson", "F", DateTime.UtcNow.AddYears(-18));
+            //Act
+            _verificationResponse = await _sut.ValidateLearner("012345678", "Ron", "Swanson", "F", DateTime.UtcNow.AddYears(-18));
 
-        //    //Assert
-        //    _verificationResponse.Should().NotBeNull();
-        //    _verificationResponse.Should().BeOfType<LearnerVerificationResponse>();
-        //}
+            //Assert
+            _verificationResponse.Should().NotBeNull();
+            _verificationResponse.Should().BeOfType<LearnerVerificationResponse>();
+        }
 
-        //[Test]
-        //public async Task ThenVerificationRequestIsBuiltCorrectly()
-        //{
-        //    //Arrange
-        //    MockValidClientProvider();
-        //    AddValidSettings();
-        //    var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings, Mock.Of<ILogger<LearnerValidationService>>());
-        //    var uln = "912345678";
-        //    var firstName = "April";
-        //    var lastName = "Ludgate";
-        //    var gender = "F";
-        //    var dateOfBirth = DateTime.UtcNow.AddYears(-20);
+        [Test]
+        public async Task ThenVerificationRequestIsBuiltCorrectly()
+        {
+            //Arrange
+            MockValidClientProvider();
+            AddValidSettings();
+            var _sut = new LearnerValidationService(_mockClientProvider.Object, _settings, Mock.Of<ILogger<LearnerValidationService>>());
+            var uln = "912345678";
+            var firstName = "April";
+            var lastName = "Ludgate";
+            var gender = "F";
+            var dateOfBirth = DateTime.UtcNow.AddYears(-20);
 
-        //    //Act
-        //    _verificationResponse = await _sut.ValidateLearner(uln, firstName, lastName, gender, dateOfBirth);
+            //Act
+            _verificationResponse = await _sut.ValidateLearner(uln, firstName, lastName, gender, dateOfBirth);
 
-        //    //Assert
-        //    _mockClientWrapper.Verify(x =>
-        //        x.verifyLearnerAsync(It.Is<VerifyLearnerRqst>(y =>
-        //            y.LearnerToVerify.ULN == uln
-        //            && y.LearnerToVerify.GivenName == firstName
-        //            && y.LearnerToVerify.FamilyName == lastName
-        //            && y.LearnerToVerify.Gender == gender
-        //            && y.LearnerToVerify.DateOfBirth == dateOfBirth.ToString("yyyy-MM-dd")
-        //    )));
-        //}
+            //Assert
+            _mockClientWrapper.Verify(x =>
+                x.verifyLearnerAsync(It.Is<VerifyLearnerRqst>(y =>
+                    y.LearnerToVerify.ULN == uln
+                    && y.LearnerToVerify.GivenName == firstName
+                    && y.LearnerToVerify.FamilyName == lastName
+                    && y.LearnerToVerify.Gender == gender
+                    && y.LearnerToVerify.DateOfBirth == dateOfBirth.ToString("yyyy-MM-dd")
+            )));
+        }
     }
 }
