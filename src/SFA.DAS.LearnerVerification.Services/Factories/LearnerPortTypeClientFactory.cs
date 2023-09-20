@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Azure;
 using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.ConstrainedExecution;
 
 namespace SFA.DAS.LearnerVerification.Services.Factories
 {
@@ -29,8 +30,11 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
         public LearnerPortTypeClient Create(BasicHttpBinding binding)
         {
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
-            client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
-            
+            var cert = _certificateProvider.GetClientCertificate();
+            client.ClientCredentials.ClientCertificate.Certificate = cert;
+
+            client.ClientCredentials.ServiceCertificate.DefaultCertificate = cert;
+
             if (client.ClientCredentials.ClientCertificate.Certificate != null)
             {
                 _logger.LogError($"Certificate: {client.ClientCredentials.ClientCertificate.Certificate}");
