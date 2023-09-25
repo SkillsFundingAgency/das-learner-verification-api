@@ -4,7 +4,6 @@ using SFA.DAS.LearnerVerification.Services.Mappers;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 using System.ServiceModel;
 using Newtonsoft.Json;
-using System.Net;
 
 namespace SFA.DAS.LearnerVerification.Services.Services
 {
@@ -36,8 +35,6 @@ namespace SFA.DAS.LearnerVerification.Services.Services
             try
             {
                 await using var service = _lrsClientProvider.Get();
-                
-                ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) => { return true; };
 
                 var learnerVerificationResponse = await service.verifyLearnerAsync(new VerifyLearnerRqst()
                 {

@@ -1,10 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.ConstrainedExecution;
-using System.Security.Cryptography.X509Certificates;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Security;
-using System.Text;
+﻿using System.ServiceModel;
 using LearningRecordsService;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.LearnerVerification.Services.Factories;
@@ -31,19 +25,8 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Certificate;
                 binding.Security.Mode = BasicHttpSecurityMode.Transport;
                 binding.UseDefaultWebProxy = true;
-                binding.TextEncoding = Encoding.UTF8;
-                binding.TransferMode = TransferMode.Buffered;
-
+                
                 var service = _factory.Create(binding);
-
-                service.ClientCredentials.ServiceCertificate.SslCertificateAuthentication = new X509ServiceCertificateAuthentication
-                {
-                    CertificateValidationMode = X509CertificateValidationMode.None,
-                    RevocationMode = X509RevocationMode.NoCheck
-                    
-                };
-                //service.ClientCredentials.ServiceCertificate.SslCertificateAuthentication.CertificateValidationMode = X509CertificateValidationMode.Custom;
-                //service.ClientCredentials.ServiceCertificate.SslCertificateAuthentication.CustomCertificateValidator = new Validator();
 
                 return new LearnerVerificationClientWrapper(service);
             }
