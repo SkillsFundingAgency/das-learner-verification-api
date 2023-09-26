@@ -42,9 +42,14 @@ namespace SFA.DAS.LearnerVerification.Services.Services
         {
             try
             {
+                var options = new DownloadCertificateOptions(_appSettings.LrsApiWcfSettings.LRSCertificateName)
+                {
+                    KeyStorageFlags = X509KeyStorageFlags.EphemeralKeySet
+                };
+
                 var client = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
 
-                _x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName).Value;
+                _x509Certificate = client.DownloadCertificate(options).Value;
 
             }
             catch (Exception ex)
