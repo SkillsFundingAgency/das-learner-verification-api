@@ -184,14 +184,6 @@
                                 {
                                     "name": "LoggingRedisKey",
                                     "value": "[parameters('loggingRedisKey')]"
-                                },
-                                {
-                                    "name": "WEBSITE_LOAD_USER_PROFILE",
-                                    "value": 1
-                                },
-                                {
-                                    "name": "WEBSITE_LOAD_CERTIFICATES",
-                                    "value": "*"
                                 }
                             ]
                         }
