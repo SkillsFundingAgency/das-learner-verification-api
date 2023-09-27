@@ -4,6 +4,7 @@ using SFA.DAS.LearnerVerification.Services.Services;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 using Microsoft.Extensions.Logging;
 using System.ServiceModel.Security;
+using System.Net;
 
 namespace SFA.DAS.LearnerVerification.Services.Factories
 {
@@ -26,6 +27,7 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
 
         public LearnerPortTypeClient Create(BasicHttpBinding binding)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
             client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
             client.ClientCredentials.ServiceCertificate.SslCertificateAuthentication =
