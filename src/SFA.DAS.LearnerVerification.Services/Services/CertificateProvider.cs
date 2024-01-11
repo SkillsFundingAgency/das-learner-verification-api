@@ -50,14 +50,18 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 var secretClient = new SecretClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
 
                 //_x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName).Value;
-                KeyVaultCertificateWithPolicy certResponse = client.GetCertificateAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).Result;
-                KeyVaultSecretIdentifier identifier = new KeyVaultSecretIdentifier(certResponse.SecretId);
+                //KeyVaultCertificateWithPolicy certResponse = client.GetCertificateAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).Result;
+                //KeyVaultSecretIdentifier identifier = new KeyVaultSecretIdentifier(certResponse.SecretId);
 
-                Response<KeyVaultSecret> secretResponse = secretClient.GetSecretAsync(identifier.Name, identifier.Version).Result;
-                KeyVaultSecret secret = secretResponse.Value;
-                byte[] privateKeyBytes = Convert.FromBase64String(secret.Value);
+                //Response<KeyVaultSecret> secretResponse = secretClient.GetSecretAsync(identifier.Name, identifier.Version).Result;
+                //KeyVaultSecret secret = secretResponse.Value;
+                //byte[] privateKeyBytes = Convert.FromBase64String(secret.Value);
 
-                _x509Certificate = new X509Certificate2(privateKeyBytes, "",X509KeyStorageFlags.MachineKeySet);
+                //_x509Certificate = new X509Certificate2(privateKeyBytes, "",X509KeyStorageFlags.MachineKeySet);
+
+                var certSecret = secretClient.GetSecretAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).GetAwaiter().GetResult();
+                var certificate = Convert.FromBase64String(certSecret.Value.Value);
+                _x509Certificate = new X509Certificate2(certificate);
 
             }
             catch (Exception ex)
