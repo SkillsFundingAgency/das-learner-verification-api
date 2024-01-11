@@ -57,7 +57,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 KeyVaultSecret secret = secretResponse.Value;
                 byte[] privateKeyBytes = Convert.FromBase64String(secret.Value);
 
-                _x509Certificate = new X509Certificate2(privateKeyBytes, "fIZ?2-IYs$",X509KeyStorageFlags.EphemeralKeySet);
+                _x509Certificate = new X509Certificate2(privateKeyBytes, "",X509KeyStorageFlags.MachineKeySet);
 
             }
             catch (Exception ex)
