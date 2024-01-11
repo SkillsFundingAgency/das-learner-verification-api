@@ -5,6 +5,7 @@ using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 using Microsoft.Extensions.Logging;
 using System.ServiceModel.Security;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SFA.DAS.LearnerVerification.Services.Factories
 {
@@ -29,13 +30,16 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
-            client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
-            client.ClientCredentials.ServiceCertificate.SslCertificateAuthentication =
-                    new X509ServiceCertificateAuthentication()
-                    {
-                        CertificateValidationMode = X509CertificateValidationMode.None,
-                        RevocationMode = System.Security.Cryptography.X509Certificates.X509RevocationMode.NoCheck
-                    };
+            var cert = _certificateProvider.GetClientCertificate();
+            client.ClientCredentials.ClientCertificate.Certificate = cert;
+                
+                //.Certificate = _certificateProvider.GetClientCertificate();
+            //client.ClientCredentials.ServiceCertificate.SslCertificateAuthentication =
+            //        new X509ServiceCertificateAuthentication()
+            //        {
+            //            CertificateValidationMode = X509CertificateValidationMode.None,
+            //            RevocationMode = System.Security.Cryptography.X509Certificates.X509RevocationMode.NoCheck
+            //        };
 
             if (client.ClientCredentials.ClientCertificate.Certificate != null)
             {
