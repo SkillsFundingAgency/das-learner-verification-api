@@ -47,9 +47,19 @@ namespace SFA.DAS.LearnerVerification.Services.Services
 
                 var client = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
 
-                var secretClient = new SecretClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
+                //var secretClient = new SecretClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
 
-                //_x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName).Value;
+                _x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName).Value;
+
+                foreach (X509Extension extension in _x509Certificate.Extensions)
+                {
+                    if ((extension is X509EnhancedKeyUsageExtension eku))
+                    {
+                        
+                        _logger.LogError($"EnhancedKeyUsage: {extension}");
+                        _logger.LogError($"EnhancedKeyUsage: {extension.Oid.Value}");
+                    }
+                }
                 //KeyVaultCertificateWithPolicy certResponse = client.GetCertificateAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).Result;
                 //KeyVaultSecretIdentifier identifier = new KeyVaultSecretIdentifier(certResponse.SecretId);
 
@@ -59,9 +69,9 @@ namespace SFA.DAS.LearnerVerification.Services.Services
 
                 //_x509Certificate = new X509Certificate2(privateKeyBytes, "",X509KeyStorageFlags.MachineKeySet);
 
-                var certSecret = secretClient.GetSecretAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).GetAwaiter().GetResult();
-                var certificate = Convert.FromBase64String(certSecret.Value.Value);
-                _x509Certificate = new X509Certificate2(certificate);
+                //var certSecret = secretClient.GetSecretAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).GetAwaiter().GetResult();
+                //var certificate = Convert.FromBase64String(certSecret.Value.Value);
+                //_x509Certificate = new X509Certificate2(certificate);
 
             }
             catch (Exception ex)

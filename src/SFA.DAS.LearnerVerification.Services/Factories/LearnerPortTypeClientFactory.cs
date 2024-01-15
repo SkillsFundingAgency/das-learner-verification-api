@@ -30,10 +30,7 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
-            var cert = _certificateProvider.GetClientCertificate();
-            client.ClientCredentials.ClientCertificate.Certificate = cert;
-                
-                //.Certificate = _certificateProvider.GetClientCertificate();
+            client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
             //client.ClientCredentials.ServiceCertificate.SslCertificateAuthentication =
             //        new X509ServiceCertificateAuthentication()
             //        {
