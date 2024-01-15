@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using Azure;
 using Azure.Identity;
 using Azure.Security.KeyVault.Certificates;
@@ -45,29 +46,37 @@ namespace SFA.DAS.LearnerVerification.Services.Services
             try
             {
 
-                var client = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
+                //var client = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
 
-                //var secretClient = new SecretClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
+                var secretClient = new SecretClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
 
-                _x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName).Value;
+                //_x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName).Value;
+
+                
+                //KeyVaultCertificateWithPolicy certResponse = client.GetCertificateAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).Result;
+                //KeyVaultSecretIdentifier identifier = new KeyVaultSecretIdentifier(certResponse.SecretId);
+
+                Response<KeyVaultSecret> secretResponse = secretClient.GetSecretAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).Result;
+                //KeyVaultSecret secret = secretResponse.Value;
+                byte[] privateKeyBytes = Convert.FromBase64String(secretResponse.Value.Value);
+
+                _x509Certificate = new X509Certificate2(privateKeyBytes);
 
                 foreach (X509Extension extension in _x509Certificate.Extensions)
                 {
                     if ((extension is X509EnhancedKeyUsageExtension eku))
                     {
-                        
+                        X509EnhancedKeyUsageExtension ext = (X509EnhancedKeyUsageExtension)extension;
+                        OidCollection oids = ext.EnhancedKeyUsages;
+                        foreach (Oid oid in oids)
+                        {
+                            _logger.LogError($"{oid.FriendlyName} - ({oid.Value})");
+                        }
+
                         _logger.LogError($"EnhancedKeyUsage: {extension}");
                         _logger.LogError($"EnhancedKeyUsage: {extension.Oid.Value}");
                     }
                 }
-                //KeyVaultCertificateWithPolicy certResponse = client.GetCertificateAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).Result;
-                //KeyVaultSecretIdentifier identifier = new KeyVaultSecretIdentifier(certResponse.SecretId);
-
-                //Response<KeyVaultSecret> secretResponse = secretClient.GetSecretAsync(identifier.Name, identifier.Version).Result;
-                //KeyVaultSecret secret = secretResponse.Value;
-                //byte[] privateKeyBytes = Convert.FromBase64String(secret.Value);
-
-                //_x509Certificate = new X509Certificate2(privateKeyBytes, "",X509KeyStorageFlags.MachineKeySet);
 
                 //var certSecret = secretClient.GetSecretAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).GetAwaiter().GetResult();
                 //var certificate = Convert.FromBase64String(certSecret.Value.Value);
