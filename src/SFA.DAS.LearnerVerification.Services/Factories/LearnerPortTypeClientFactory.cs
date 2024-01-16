@@ -26,7 +26,7 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
             }
         }
 
-        public LearnerPortTypeClient Create(BasicHttpBinding binding)
+        public LearnerPortTypeClient Create(BasicHttpsBinding binding)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
@@ -45,6 +45,11 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
                 _logger.LogError($"Certificate serial no: {client.ClientCredentials.ClientCertificate.Certificate.SerialNumber}");
             }
             return client;
+        }
+
+        public LearnerPortTypeClient Create(WSHttpBinding binding)
+        {
+            throw new NotImplementedException();
         }
     }
 }
