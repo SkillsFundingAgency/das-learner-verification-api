@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using LearningRecordsService;
 using Microsoft.Extensions.Logging;
@@ -26,10 +27,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Certificate;
                 binding.Security.Mode = BasicHttpsSecurityMode.Transport;
                 binding.TextEncoding = Encoding.UTF8;
-                binding.TransferMode = TransferMode.Buffered;
-                binding.AllowCookies = false;
-                binding.UseDefaultWebProxy = false;
-
+                
                 var service = _factory.Create(binding);
 
                 return new LearnerVerificationClientWrapper(service);
