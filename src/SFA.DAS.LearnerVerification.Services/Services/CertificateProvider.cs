@@ -60,7 +60,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
                 //KeyVaultSecret secret = secretResponse.Value;
                 byte[] privateKeyBytes = Convert.FromBase64String(secretResponse.Value.Value);
 
-                _x509Certificate = new X509Certificate2(privateKeyBytes);
+                _x509Certificate = new X509Certificate2(privateKeyBytes, (string)null, X509KeyStorageFlags.MachineKeySet);
 
                 foreach (X509Extension extension in _x509Certificate.Extensions)
                 {

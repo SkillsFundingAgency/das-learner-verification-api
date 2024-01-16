@@ -4789,7 +4789,7 @@ namespace LearningRecordsService
         {
             if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_LearnerPortType))
             {
-                return new System.ServiceModel.EndpointAddress("https://cmp-ws.dev.lrs.education.gov.uk/learnerservice.svc");
+                return new System.ServiceModel.EndpointAddress("https://cmp-ws.dev.lrs.education.gov.uk/LearnerService.svc");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
