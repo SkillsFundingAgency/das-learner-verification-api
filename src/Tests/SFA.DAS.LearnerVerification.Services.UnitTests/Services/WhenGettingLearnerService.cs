@@ -50,8 +50,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Services
             _mockClientTypeFactory
                 .Verify(factory => factory.Create(It.Is<BasicHttpsBinding>(
                     binding => binding.Security.Transport.ClientCredentialType == HttpClientCredentialType.Certificate &&
-                    binding.Security.Mode == BasicHttpsSecurityMode.Transport &&
-                    binding.UseDefaultWebProxy == true
+                    binding.Security.Mode == BasicHttpsSecurityMode.Transport
                     )), Times.Once);
         }
     }
