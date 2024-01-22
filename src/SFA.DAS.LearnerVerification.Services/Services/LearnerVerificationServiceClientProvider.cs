@@ -23,11 +23,12 @@ namespace SFA.DAS.LearnerVerification.Services.Services
         {
             try
             {
-                var binding = new BasicHttpsBinding();
+                var binding = new BasicHttpBinding();
                 binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Certificate;
-                binding.Security.Mode = BasicHttpsSecurityMode.Transport;
+                binding.Security.Mode = BasicHttpSecurityMode.Transport;
                 binding.TextEncoding = Encoding.UTF8;
-                
+                binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.Basic;
+                                
                 var service = _factory.Create(binding);
 
                 return new LearnerVerificationClientWrapper(service);
