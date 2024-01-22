@@ -45,6 +45,26 @@ namespace SFA.DAS.LearnerVerification.Services.Services
         {
             try
             {
+                #region
+                foreach (StoreLocation storeLocation in (StoreLocation[])Enum.GetValues(typeof(StoreLocation)))
+                {
+                    foreach(StoreName storeName in (StoreName[])Enum.GetValues(typeof(StoreName))) 
+                    {
+                        X509Store store = new X509Store(storeName, storeLocation);
+                        try
+                        {
+                            store.Open(OpenFlags.OpenExistingOnly);
+
+                            _logger.LogError($"Yes  Certs: {store.Certificates.Count}, Name: {store.Name}, Location: {store.Location}");
+                           
+                        }
+                        catch (CryptographicException)
+                        {
+                            _logger.LogError($"No  Name: {store.Name}, Location: {store.Location}");
+                        }
+                    }
+                }
+                #endregion
 
                 //var client = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
 
@@ -62,21 +82,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
 
                 _x509Certificate = new X509Certificate2(privateKeyBytes, (string)null, X509KeyStorageFlags.MachineKeySet);
 
-                foreach (X509Extension extension in _x509Certificate.Extensions)
-                {
-                    if ((extension is X509EnhancedKeyUsageExtension eku))
-                    {
-                        X509EnhancedKeyUsageExtension ext = (X509EnhancedKeyUsageExtension)extension;
-                        OidCollection oids = ext.EnhancedKeyUsages;
-                        foreach (Oid oid in oids)
-                        {
-                            _logger.LogError($"{oid.FriendlyName} - ({oid.Value})");
-                        }
-
-                        _logger.LogError($"EnhancedKeyUsage: {extension}");
-                        _logger.LogError($"EnhancedKeyUsage: {extension.Oid.Value}");
-                    }
-                }
+               
 
                 //var certSecret = secretClient.GetSecretAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).GetAwaiter().GetResult();
                 //var certificate = Convert.FromBase64String(certSecret.Value.Value);
