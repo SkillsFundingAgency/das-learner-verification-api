@@ -28,7 +28,7 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
 
         public LearnerPortTypeClient Create(BasicHttpsBinding binding)
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
 
             //var cert = _certificateProvider.GetCertificates(new[] {"797AC6AE3BBA3279168560C727EE1D2BE44DB0BF"});
@@ -43,6 +43,7 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
             //            CertificateValidationMode = X509CertificateValidationMode.None,
             //            RevocationMode = System.Security.Cryptography.X509Certificates.X509RevocationMode.NoCheck
             //        };
+
 
             if (client.ClientCredentials.ClientCertificate.Certificate != null)
             {
