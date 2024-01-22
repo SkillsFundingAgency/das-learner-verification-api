@@ -35,7 +35,7 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
 
             //client.ClientCredentials.ClientCertificate.Certificate = cert.FirstOrDefault();
 
-            client.ClientCredentials.ClientCertificate.SetCertificate(StoreLocation.CurrentUser,StoreName.My, X509FindType.FindByThumbprint, "797AC6AE3BBA3279168560C727EE1D2BE44DB0BF")
+            client.ClientCredentials.ClientCertificate.SetCertificate(StoreLocation.CurrentUser, StoreName.My, X509FindType.FindByThumbprint, "797AC6AE3BBA3279168560C727EE1D2BE44DB0BF");
             //client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
             //client.ClientCredentials.ServiceCertificate.SslCertificateAuthentication =
             //        new X509ServiceCertificateAuthentication()
