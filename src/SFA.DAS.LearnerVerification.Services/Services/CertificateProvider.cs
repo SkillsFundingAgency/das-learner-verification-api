@@ -53,6 +53,7 @@ namespace SFA.DAS.LearnerVerification.Services.Services
             foreach (var thumbprint in thumbprints)
             {
                 var certs = certStore.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, false);
+                _logger.LogError($"Certificate: {certs.FirstOrDefault().Issuer}");
                 certificates.AddRange(certs);
             }
 
