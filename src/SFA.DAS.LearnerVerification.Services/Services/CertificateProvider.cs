@@ -21,6 +21,8 @@ namespace SFA.DAS.LearnerVerification.Services.Services
             _logger = logger;
         }
 
+       
+
         public X509Certificate2 GetClientCertificate()
         {
             if (string.IsNullOrEmpty(_appSettings.LearnerVerificationKeyVaultUrl))
@@ -40,7 +42,22 @@ namespace SFA.DAS.LearnerVerification.Services.Services
 
             return _x509Certificate;
         }
+         public X509Certificate2Collection GetCertificates(string[] thumbprints)
+        {
+            var certStore = new X509Store(StoreName.My, StoreLocation.CurrentUser);
 
+            certStore.Open(OpenFlags.ReadOnly);
+
+            var certificates = new X509Certificate2Collection();
+
+            foreach (var thumbprint in thumbprints)
+            {
+                var certs = certStore.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, false);
+                certificates.AddRange(certs);
+            }
+
+            return certificates;
+        }
         private void SetupClientCertificate()
         {
             try
