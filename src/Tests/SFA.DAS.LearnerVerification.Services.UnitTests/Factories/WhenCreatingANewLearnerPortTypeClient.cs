@@ -7,6 +7,7 @@ using SFA.DAS.LearnerVerification.Services.Services;
 using LearningRecordsService;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 using Microsoft.Extensions.Logging;
+using System.ServiceModel.Description;
 
 namespace SFA.DAS.LearnerVerification.Services.UnitTests.Factories
 {
@@ -59,7 +60,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Factories
             AddLearnerServiceBaseUrl(url);
 
             //Act
-            Action act = () => { _ = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings, Mock.Of<ILogger<LearnerPortTypeClientFactory>>()); };
+            Action act = () => { _ = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings, Mock.Of<ILogger<LearnerPortTypeClientFactory>>(), Mock.Of<IEndpointBehavior>()); };
 
             //Assert
             act.Should()
@@ -73,7 +74,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Factories
         {
             //Arrange
             AddValidLearnerServiceBaseUrl();
-            var _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings, Mock.Of<ILogger<LearnerPortTypeClientFactory>>());
+            var _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings, Mock.Of<ILogger<LearnerPortTypeClientFactory>>(), Mock.Of<IEndpointBehavior>());
 
             //Act
             _client = _sut.Create(_basicHttpBinding);
@@ -88,7 +89,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Factories
         {
             //Arrange
             AddValidLearnerServiceBaseUrl();
-            var _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings, Mock.Of<ILogger<LearnerPortTypeClientFactory>>());
+            var _sut = new LearnerPortTypeClientFactory(Mock.Of<ICertificateProvider>(), _settings, Mock.Of<ILogger<LearnerPortTypeClientFactory>>(), Mock.Of<IEndpointBehavior>());
 
             //Act
             _client = _sut.Create(_basicHttpBinding);

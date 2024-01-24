@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System.ServiceModel.Security;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.DependencyInjection;
+using System.ServiceModel.Description;
 
 namespace SFA.DAS.LearnerVerification.Services.Factories
 {
@@ -13,12 +15,14 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
     {
         private readonly ICertificateProvider _certificateProvider;
         private readonly ILogger<LearnerPortTypeClientFactory> _logger;
+        private readonly IEndpointBehavior _loggingBehavior;
         private readonly LrsApiWcfSettings _lrsApiSettings;
 
-        public LearnerPortTypeClientFactory(ICertificateProvider certificateProvider, ApplicationSettings appSettings, ILogger<LearnerPortTypeClientFactory> logger)
+        public LearnerPortTypeClientFactory(ICertificateProvider certificateProvider, ApplicationSettings appSettings, ILogger<LearnerPortTypeClientFactory> logger, IEndpointBehavior loggingBehavior)
         {
             _certificateProvider = certificateProvider;
             _logger = logger;
+            _loggingBehavior = loggingBehavior;
             _lrsApiSettings = appSettings.LrsApiWcfSettings;
             if (string.IsNullOrEmpty(_lrsApiSettings.LearnerServiceBaseUrl))
             {
@@ -35,11 +39,12 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
 
             //client.ClientCredentials.ClientCertificate.Certificate = cert.FirstOrDefault();
 
-            client.ClientCredentials.ClientCertificate.SetCertificate(StoreLocation.CurrentUser, StoreName.My, X509FindType.FindByThumbprint, "797AC6AE3BBA3279168560C727EE1D2BE44DB0BF");
+            //client.ClientCredentials.ClientCertificate.SetCertificate(StoreLocation.CurrentUser, StoreName.My, X509FindType.FindByThumbprint, "797AC6AE3BBA3279168560C727EE1D2BE44DB0BF");
             
 
 
-            //client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
+            client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
+            client.Endpoint.EndpointBehaviors.Add(_loggingBehavior);
             //client.ClientCredentials.ServiceCertificate.SslCertificateAuthentication =
             //        new X509ServiceCertificateAuthentication()
             //        {
