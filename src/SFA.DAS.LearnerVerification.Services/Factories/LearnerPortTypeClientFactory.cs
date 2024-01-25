@@ -3,10 +3,6 @@ using System.ServiceModel;
 using SFA.DAS.LearnerVerification.Services.Services;
 using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 using Microsoft.Extensions.Logging;
-using System.ServiceModel.Security;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.Extensions.DependencyInjection;
 using System.ServiceModel.Description;
 
 namespace SFA.DAS.LearnerVerification.Services.Factories
@@ -40,12 +36,13 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
             //client.ClientCredentials.ClientCertificate.Certificate = cert.FirstOrDefault();
 
             //client.ClientCredentials.ClientCertificate.SetCertificate(StoreLocation.CurrentUser, StoreName.My, X509FindType.FindByThumbprint, "797AC6AE3BBA3279168560C727EE1D2BE44DB0BF");
-            
 
 
             client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
             client.Endpoint.EndpointBehaviors.Add(_loggingBehavior);
-            //client.ClientCredentials.ServiceCertificate.SslCertificateAuthentication =
+            client.ClientCredentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
+
+                        //client.ClientCredentials.ServiceCertificate.SslCertificateAuthentication =
             //        new X509ServiceCertificateAuthentication()
             //        {
             //            CertificateValidationMode = X509CertificateValidationMode.None,
@@ -60,11 +57,6 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
                 _logger.LogError($"Certificate serial no: {client.ClientCredentials.ClientCertificate.Certificate.SerialNumber}");
             }
             return client;
-        }
-
-        public LearnerPortTypeClient Create(WSHttpBinding binding)
-        {
-            throw new NotImplementedException();
         }
     }
 }
