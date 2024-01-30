@@ -17,7 +17,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Factories
         private LearnerPortTypeClient _client;
         private Fixture _fixture;
         private ApplicationSettings _settings;
-        private BasicHttpBinding _basicHttpBinding;
+        private BasicHttpsBinding _basicHttpBinding;
 
         [SetUp]
         public void Setup()
@@ -25,7 +25,7 @@ namespace SFA.DAS.LearnerVerification.Services.UnitTests.Factories
             //Arrange
             _client = new();
             _fixture = new Fixture();
-            _basicHttpBinding = _fixture.Create<BasicHttpBinding>();
+            _basicHttpBinding = _fixture.Create<BasicHttpsBinding>();
             _settings = new ApplicationSettings();
         }
 

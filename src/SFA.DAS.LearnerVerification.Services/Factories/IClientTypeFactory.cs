@@ -4,6 +4,6 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
 {
     public interface IClientTypeFactory<out T>
     {
-        T Create(BasicHttpBinding binding);
+        T Create(BasicHttpsBinding binding);
     }
 }
