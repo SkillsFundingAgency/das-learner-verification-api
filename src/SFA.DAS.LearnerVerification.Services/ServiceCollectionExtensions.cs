@@ -15,16 +15,9 @@ namespace SFA.DAS.LearnerVerification.Services
         public static IServiceCollection AddDomainServices(this IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddTransient<LoggingMessageInspector>()
-                .AddTransient<LoggingBehavior>()
                 .AddTransient<ICertificateProvider, CertificateProvider>()
                 .AddTransient<ILearnerValidationService, LearnerValidationService>()
-                .AddTransient<IClientTypeFactory<LearnerPortTypeClient>, LearnerPortTypeClientFactory>(serviceProvider => new LearnerPortTypeClientFactory(
-                    certificateProvider: serviceProvider.GetRequiredService<ICertificateProvider>(),
-                    appSettings: serviceProvider.GetRequiredService<ApplicationSettings>(),
-                    logger: serviceProvider.GetRequiredService<ILogger<LearnerPortTypeClientFactory>>(),
-                    loggingBehavior: serviceProvider.GetRequiredService<LoggingBehavior>()
-                    ))
+                .AddTransient<IClientTypeFactory<LearnerPortTypeClient>, LearnerPortTypeClientFactory>()
                 .AddTransient<ILearnerVerificationServiceClientProvider, LearnerVerificationServiceClientProvider>();
 
             return serviceCollection;

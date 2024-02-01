@@ -5,6 +5,7 @@ using SFA.DAS.LearnerVerification.Infrastructure.Configuration;
 using Microsoft.Extensions.Logging;
 using System.ServiceModel.Description;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
 
 namespace SFA.DAS.LearnerVerification.Services.Factories
 {
@@ -12,14 +13,12 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
     {
         private readonly ICertificateProvider _certificateProvider;
         private readonly ILogger<LearnerPortTypeClientFactory> _logger;
-        private readonly IEndpointBehavior _loggingBehavior;
         private readonly LrsApiWcfSettings _lrsApiSettings;
 
-        public LearnerPortTypeClientFactory(ICertificateProvider certificateProvider, ApplicationSettings appSettings, ILogger<LearnerPortTypeClientFactory> logger, IEndpointBehavior loggingBehavior)
+        public LearnerPortTypeClientFactory(ICertificateProvider certificateProvider, ApplicationSettings appSettings, ILogger<LearnerPortTypeClientFactory> logger)
         {
             _certificateProvider = certificateProvider;
             _logger = logger;
-            _loggingBehavior = loggingBehavior;
             _lrsApiSettings = appSettings.LrsApiWcfSettings;
             if (string.IsNullOrEmpty(_lrsApiSettings.LearnerServiceBaseUrl))
             {
@@ -29,27 +28,12 @@ namespace SFA.DAS.LearnerVerification.Services.Factories
 
         public LearnerPortTypeClient Create(BasicHttpsBinding binding)
         {
-            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             
             var client = new LearnerPortTypeClient(binding, new EndpointAddress(_lrsApiSettings.LearnerServiceBaseUrl));
 
-            //var cert = _certificateProvider.GetCertificates(new[] {"797AC6AE3BBA3279168560C727EE1D2BE44DB0BF"});
-
-            //client.ClientCredentials.ClientCertificate.Certificate = cert.FirstOrDefault();
-
-            //var endpointClientBehavior = new ClientCredentials();
-            //endpointClientBehavior.ClientCertificate.SetCertificate(StoreLocation.CurrentUser, StoreName.My, X509FindType.FindByThumbprint, "797AC6AE3BBA3279168560C727EE1D2BE44DB0BF");
-            
             client.ClientCredentials.ClientCertificate.SetCertificate(StoreLocation.CurrentUser, StoreName.My, X509FindType.FindByThumbprint, "797AC6AE3BBA3279168560C727EE1D2BE44DB0BF");
 
-
-            //client.ClientCredentials.ClientCertificate.Certificate = _certificateProvider.GetClientCertificate();
-            
-            //client.Endpoint.EndpointBehaviors.Add(endpointClientBehavior);
-            client.Endpoint.EndpointBehaviors.Add(_loggingBehavior);
             client.ClientCredentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
-
-         
 
 
             if (client.ClientCredentials.ClientCertificate.Certificate != null)
