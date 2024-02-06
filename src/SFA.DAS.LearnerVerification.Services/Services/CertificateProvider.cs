@@ -42,69 +42,13 @@ namespace SFA.DAS.LearnerVerification.Services.Services
 
             return _x509Certificate;
         }
-         public X509Certificate2Collection GetCertificates(string[] thumbprints)
-        {
-            var certStore = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-
-            certStore.Open(OpenFlags.ReadOnly);
-
-            var certificates = new X509Certificate2Collection();
-
-            foreach (var thumbprint in thumbprints)
-            {
-                var certs = certStore.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, false);
-                _logger.LogError($"Certificate: {certs.FirstOrDefault().Issuer}");
-                certificates.AddRange(certs);
-            }
-
-            return certificates;
-        }
         private void SetupClientCertificate()
         {
             try
             {
-                #region
-                foreach (StoreLocation storeLocation in (StoreLocation[])Enum.GetValues(typeof(StoreLocation)))
-                {
-                    foreach(StoreName storeName in (StoreName[])Enum.GetValues(typeof(StoreName))) 
-                    {
-                        X509Store store = new X509Store(storeName, storeLocation);
-                        try
-                        {
-                            store.Open(OpenFlags.OpenExistingOnly);
 
-                            _logger.LogError($"Yes  Certs: {store.Certificates.Count}, Name: {store.Name}, Location: {store.Location}");
-                           
-                        }
-                        catch (CryptographicException)
-                        {
-                            _logger.LogError($"No  Name: {store.Name}, Location: {store.Location}");
-                        }
-                    }
-                }
-                #endregion
-
-                //var client = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
-
-                var secretClient = new SecretClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
-
-                //_x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName).Value;
-
-                
-                //KeyVaultCertificateWithPolicy certResponse = client.GetCertificateAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).Result;
-                //KeyVaultSecretIdentifier identifier = new KeyVaultSecretIdentifier(certResponse.SecretId);
-
-                Response<KeyVaultSecret> secretResponse = secretClient.GetSecretAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).Result;
-                //KeyVaultSecret secret = secretResponse.Value;
-                byte[] privateKeyBytes = Convert.FromBase64String(secretResponse.Value.Value);
-
-                _x509Certificate = new X509Certificate2(privateKeyBytes, (string)null, X509KeyStorageFlags.MachineKeySet);
-
-               
-
-                //var certSecret = secretClient.GetSecretAsync(_appSettings.LrsApiWcfSettings.LRSCertificateName).GetAwaiter().GetResult();
-                //var certificate = Convert.FromBase64String(certSecret.Value.Value);
-                //_x509Certificate = new X509Certificate2(certificate);
+                var client = new CertificateClient(new Uri(_appSettings.LearnerVerificationKeyVaultUrl), new DefaultAzureCredential());
+                _x509Certificate = client.DownloadCertificate(_appSettings.LrsApiWcfSettings.LRSCertificateName);
 
             }
             catch (Exception ex)
