@@ -29,6 +29,18 @@
         "resourceGroupLocation": {
             "type": "string"
         },
+        "sharedEnvVirtualNetworkName": {
+            "type": "string"
+        },
+        "subnetObject": {
+            "type": "object"
+        },
+        "modifiedSubnetServiceEndpointList": {
+            "type": "array"
+        },
+        "subnetDelegations": {
+            "type": "array"
+        },
         "sharedManagementResourceGroup": {
             "type": "string"
         },
@@ -42,9 +54,6 @@
             "type": "string"
         },
         "sharedBackEndAppServicePlanName": {
-            "type": "string"
-        },
-        "sharedBackEndSubnetResourceId": {
             "type": "string"
         },
         "backEndAccessRestrictions": {
@@ -78,6 +87,39 @@
             "location": "[parameters('resourceGroupLocation')]",
             "tags": "[parameters('tags')]",
             "properties": {}
+        },
+        {
+            "apiVersion": "2021-04-01",
+            "name": "[concat(parameters('subnetObject').name, '-', parameters('utcValue'))]",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'subnet.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "virtualNetworkName": {
+                        "value": "[parameters('sharedEnvVirtualNetworkName')]"
+                    },
+                    "subnetName": {
+                        "value": "[parameters('subnetObject').name]"
+                    },
+                    "subnetAddressPrefix": {
+                        "value": "[parameters('subnetObject').addressSpace]"
+                    },
+                    "serviceEndpointList": {
+                        "value": "[parameters('modifiedSubnetServiceEndpointList')]"
+                    },
+                    "delegations": {
+                        "value": "[parameters('subnetDelegations')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[variables('resourceGroupName')]"
+            ]
         },
         {
             "apiVersion": "2021-04-01",
@@ -152,7 +194,7 @@
                         "value": "[parameters('sharedEnvResourceGroup')]"
                     },
                     "subnetResourceId": {
-                        "value": "[parameters('sharedBackEndSubnetResourceId')]"
+                        "value": "[reference(concat(parameters('subnetObject').name, '-', parameters('utcValue'))).outputs.SubnetResourceId.value]"
                     },
                     "appServiceAppSettings": {
                         "value": {
@@ -207,7 +249,7 @@
             "apiVersion": "2021-04-01",
             "name": "[concat(variables('keyVaultName'), '-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
-            "resourceGroup": "[variables('resourceGroupName')]",            
+            "resourceGroup": "[variables('resourceGroupName')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -228,7 +270,7 @@
                         "Value": true
                     },
                     "subnetResourceIdList": {
-                        "value": "[createArray(parameters('sharedBackEndSubnetResourceId'))]"
+                        "value": ["[reference(concat(parameters('subnetObject').name, '-', parameters('utcValue'))).outputs.SubnetResourceId.value]"]
                     },
                     "allowTrustedMicrosoftServices": {
                         "value": false
